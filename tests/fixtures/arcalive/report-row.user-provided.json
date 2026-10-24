@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "provenance": "user-provided-text-anonymized",
+  "observedOn": "2026-10-24",
+  "exampleValuesSynthetic": true,
+  "liveDomVerified": false,
+  "selectors": null,
+  "listFieldLabels": ["신고날짜", "신고 대상", "작성자", "신고자", "처리 상태", "처리자", "조회하기"],
+  "listRowExample": {
+    "reportedAtDisplay": "2026-01-01 12:00:00",
+    "targetTypeDisplay": "게시글",
+    "targetUrl": "https://arca.live/b/example_channel/10000001",
+    "targetAuthorDisplayName": "테스트작성자A",
+    "reporterDisplayName": "ExampleReporter#00000001",
+    "reporterProfileUrl": "https://arca.live/u/@ExampleReporter/00000001",
+    "reporterKey": null,
+    "processingStatusDisplay": "대기",
+    "processorDisplayName": null,
+    "detailUrl": "https://arca.live/reports/b/example_channel/REPORT_EXAMPLE_01"
+  },
+  "detailFields": {
+    "reasonFieldAvailable": true,
+    "availabilityProvenance": "user-confirmed",
+    "reasonText": null,
+    "keywordMatched": null
+  },
+  "unverified": ["stable-reporter-identity", "report-pagination-completeness", "status-semantics", "reason-dom", "permissions", "profile-activity-count"],
+  "notes": [
+    "All account names, IDs, links and timestamps in the example row are synthetic; do not open them.",
+    "This is a transcription contract, not captured HTML or proof that a parser works.",
+    "The supplied example has one report row and two account roles; it does not prove two distinct reports.",
+    "The user confirmed that detail reason text exists but did not provide its value.",
+    "Displayed author and reporter are different fields. A numeric profile suffix is not yet a verified stable identity.",
+    "Synthetic report ID spelling does not establish the site's accepted ID grammar."
+  ]
+}

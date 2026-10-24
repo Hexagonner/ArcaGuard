@@ -1,7 +1,8 @@
 # 실사이트 검증 현황
 
-기준일: **2026-10-24 (Asia/Seoul)**. Phase 0에서는 실사이트에 접근하지 않았다.
-로컬 UI 검증과 실사이트 검증을 구별한다. 현재 CSS 선택자 및 데이터 접근 방법은 모두 미정이다.
+기준일: **2026-10-24 (Asia/Seoul)**. Phase 1 읽기 전용 조사 승인 후 아래 근거를 갱신했다.
+로컬 UI, 공개 참고 소스, 사용자 제공 화면 정보와 실사이트 직접 검증을 구별한다.
+현재 운영에 사용할 검증된 CSS 선택자/관리 요청 방식은 없다.
 
 ## 사용자 지정 테스트 조건 (2026-10-24 추가)
 
@@ -93,3 +94,94 @@
 - 작성글 5개 미만/없음이라는 작성자 경향도 사용자 제공 정보다. 해당 계정의 실제 작성 수/가입일/
   원문 링크/삭제 이력/삭제 방식은 에이전트 직접 미검증이며 값을 추측하지 않았다.
 - 이 사례를 주제 정책/합성 인수 계획의 양성 사례로 반영했다. 실사이트 조회/관리 요청/복원은 하지 않았다.
+
+## Phase 1 — 이번 조사 범위와 접근 제한
+
+- 승인: 2026-10-24 사용자 지시 “다음 단계로 시작하자”. 읽기 조사만 승인됐고 실제 관리 쓰기는 미승인이다.
+- GitHub 연결로 ArcaRefresher 공개 파일 8개(README/라이선스 포함)를 읽고 핵심 코드 6개를 비교했다.
+  외부 코드를 실행/설치/복사하거나 런타임 의존성으로 추가하지 않았다.
+- CLI에 Chrome DevTools/Playwright 등록이 없고 세션에 전용 도구도 없음을 재확인했다.
+  Chrome 확장 브라우저는 현재 도구 목록에 표시되지만 이 목록 조회는 실사이트 연결 테스트가 아니다.
+- 이전 arca.live 사이트 안전 정책 차단과 확장 내부 URL 차단을 유지한다.
+  새 MCP/다른 접속 경로/원시 요청/프록시/프로필 조회로 우회하거나 차단된 URL을 재시도하지 않았다.
+- 아래 후보는 모두 `reference-only / live-unverified`다. 사용자 제공 신고 목록도 `user-provided`이며 직접 DOM 검증은 아니다.
+
+### REF-01 게시글·댓글·이미지 영역 후보
+
+출처: [selector.jsx](https://github.com/lekakid/ArcaRefresher/blob/develop/src/constants/selector.jsx),
+Git blob `b992fc8bf3c970f6494a4c58134598556a25e988`.
+
+- 글 범위 `.article-wrapper`, 제목 `.article-head .title`, 본문 `.article-content`,
+  작성자 `.article-head .user-info, .article-head .member-info`, 글 정보 `.article-info`를 참고 구현에서 확인했다.
+- 본문 이미지 후보는 `.article-content img:not([class$="emoticon"]):not(.twemoji)`다.
+  이는 이미지 위치 후보일 뿐 이미지에 걸린 href/확대 링크/지연 로딩 의미까지 검증한 것은 아니다.
+- 댓글 `#comment .comment-item`과 게시글 본문은 구별된다. 실제 신고 댓글의 대상 식별/URL은 미확인이다.
+- `.board-audit-list` 상수의 존재를 신고 목록이라고 해석하지 않는다.
+  `.board-title + .alert-danger`도 삭제 확정/삭제 주체를 보장하지 않는다.
+
+### REF-02 글머리·글 정보 수집의 가정
+
+출처: [ContentCollector.jsx](https://github.com/lekakid/ArcaRefresher/blob/develop/src/core/ContentCollector/ContentCollector.jsx),
+Git blob `e03812753dcff11683d3f24649dd08ae08b4486e`.
+
+- `.board-category a`의 `category=` 값과 표시 이름으로 목록을 구성한다. 실제 이동 요청의 대상 ID와
+  동일한지, 현재 채널에서 변경 가능한지, TEST의 의미가 무엇인지는 미검증이다.
+- 참고 코드의 이름→ID 맵은 같은 이름을 하나로 덮어쓸 수 있다. ArcaGuard에서는 동명 후보를
+  복수/불명확으로 취급하고 표시 이름만으로 조치 대상을 고르지 않는다.
+- 제목의 `.badge`, 날짜의 `.date time[datetime]`, 글 링크 후보를 사용한다.
+  자료 누락 시 일반/익명/현재 시각/0을 채우는 방식은 조치 근거로 사용하지 않는다.
+- 참고 코드의 글 URL 정규식은 현재 사이트의 모든 채널/댓글 URL 계약이 아니다.
+
+### REF-03 작성자 표시와 고유 신고자 식별
+
+출처: [user.jsx](https://github.com/lekakid/ArcaRefresher/blob/develop/src/func/user.jsx),
+Git blob `075abbc86866faad039345287cdc4c2d0d325623`;
+[UserProfile.jsx](https://github.com/lekakid/ArcaRefresher/blob/develop/src/feature/User/UserProfile/UserProfile.jsx),
+Git blob `417beb685bdacb77fb5c81115e46793880cca31b`.
+
+- `data-filter`, 링크 표시/제목 등으로 닉네임·번호·IP 표시를 구별하는 참고 로직이 있다.
+  고정닉에 닉네임 자체를 UID로 반환하는 관행을 불변 계정 ID 보장으로 받아들이지 않는다.
+- 표시용 번호/메모 키/IP 일부와 검증된 계정 고유성은 별개다. 신고자 식별은 신고 필드와
+  이름 변경/동명이인/익명 사례를 확인한 뒤 결정한다.
+- 검토한 UserProfile 파일은 표시 보정에 관한 코드다. 해당 범위에서 전체 작성글 수/가입일의
+  신뢰할 수 있는 자료를 확인하지 못했다. 저장글이 적다는 사용자 관찰을 실제 가입일로 바꾸지 않는다.
+
+### REF-04 비동기 읽기와 무방해 처리의 차이
+
+출처: [http.jsx](https://github.com/lekakid/ArcaRefresher/blob/develop/src/func/http.jsx),
+Git blob `d9513ef1a18f73b082bc3aff9d6867953e0a00ac`;
+[AutoRefresher/article.jsx](https://github.com/lekakid/ArcaRefresher/blob/develop/src/feature/Board/AutoRefresher/article.jsx),
+Git blob `6de2bbcabc56efa4e03bbfd20fb1606912248476`.
+
+- 참고 구현에 HTML 응답 파싱/비동기 읽기가 있다. 이것은 관리자 이동 요청/권한/결과 읽기가
+  실제 지원된다는 근거가 아니다. ArcaGuard에 네트워크 권한이나 요청 코드를 추가하지 않았다.
+- 목록 갱신은 `replaceChildren`로 보이는 내용을 재구성한다. OP-07의 현재 목록/스크롤/입력 보존
+  요구와 같지 않으므로 이 갱신 방식을 자동 이동의 대안으로 재사용하지 않는다.
+- 기본 timeout 0 등 참고 구현의 실행 가정을 무제한 대기 정책으로 복사하지 않는다.
+
+### REF-05 출처·라이선스
+
+- [README](https://github.com/lekakid/ArcaRefresher/blob/develop/README.md), blob `2b20b37ab15eb7ca6f1670d26d5b45b891133dda`.
+- [MIT LICENSE](https://github.com/lekakid/ArcaRefresher/blob/develop/LICENSE), blob `a9d0146f30f63d9ca4988c9b53705246e28d1169`.
+- 조회 브랜치는 `develop`이며 위 코드는 개별 blob으로 읽었다. 현재 DOM/전체 소스 감사로 확대 해석하지 않는다.
+  라이선스는 확인했지만 외부 구현을 배포물에 복사하지 않았으므로 새 코드 저작권 고지는 추가하지 않았다.
+
+## USR-REPORT-01 — 사용자 제공 신고 목록·상세 정보
+
+출처: 같은 대화에서 사용자가 직접 제공한 테스트 신고 행과 상세 항목 존재 확인 (2026-10-24).
+사용자는 본인 두 계정으로 만든 테스트라고 설명했다. 실제 이름/개별 신고 ID는 이 기록에서 제외한다.
+
+- 확인 주소: `https://arca.live/reports/b/prlvate`.
+  사용자 설명상 해당 채널 관리자가 신고 목록에 들어갈 수 있다. 에이전트의 권한 검증 결과는 아니다.
+- 목록 열: 신고날짜 / 신고 대상 / 작성자 / 신고자 / 처리 상태 / 처리자 / 조회하기.
+- 제공된 대상은 **게시글 링크**다. 작성자는 신고된 글의 작성자이고 신고자는 별도 계정이다.
+  두 계정의 역할이 있다는 사실을 신고 2건/고유 신고자 2명으로 집계하지 않는다.
+- 목록의 처리 상태 표시가 `대기`인 행을 제공했다. 상태별 최종 처리 의미/처리자 공란의 의미는 미검증이다.
+- 상세 주소 형태는 `/reports/b/{channel}/{reportId}`로 제공됐다. reportId는 불투명 식별자로 취급하며
+  대상 articleId/작성자/인증 값과 혼동하거나 숫자로 강제 변환하지 않는다.
+- 신고자 프로필 링크에 닉네임/번호 형태가 제공됐다. 해당 번호의 불변성/고유성은 추가 검증 전이다.
+- 사용자가 조회하기 상세 화면에 **신고 내용/사유가 표시됨**을 확인했다.
+  실제 사유 문자열은 요청/저장하지 않았으므로 이번 신고의 `광고` 일치 여부는 미확인이다.
+- 고유 계정 키, 신고 페이지 완전성/철회/중복 행/댓글 신고, DOM 선택자, 조회 권한의 채널별 의미는 미검증이다.
+- 익명화된 계약 예시는 `tests/fixtures/arcalive/report-row.user-provided.json`이다.
+  모든 계정/ID/링크/시각 값은 합성이고 HTML 캡처가 아니다. 실제 DOM/수집기 검증으로 사용하지 않는다.

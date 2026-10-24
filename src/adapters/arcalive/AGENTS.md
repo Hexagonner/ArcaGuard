@@ -1,6 +1,7 @@
 # ArcaLive adapter rules
 
-- Phase 0 creates this boundary only; no site selectors or administration requests yet.
+- Phase 1 read-only investigation is approved. No live administration writes or later-phase
+  implementation is approved. Reference-code selectors remain unverified until live evidence exists.
 - Use only observed site structures. Document each selector's source and verification
   date in `docs/SITE_VERIFICATION.md` before adding it.
 - Never infer report list structure, moderator authority or category-change endpoints.

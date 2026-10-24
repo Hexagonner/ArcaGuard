@@ -1,8 +1,8 @@
 # ArcaGuard Codex 도구 정책
 
 적용: **Tooling Specification 1.1**, ArcaGuard Specification 1.0 이후의 개발 도구 부록.
-확인일: **2026-10-24 (Asia/Seoul)**. 현재 Phase 0 완료, Phase 1~9 미승인.
-이번 반영은 문서/환경 점검이며 새로운 기능 개발이나 실사이트 조사 승인이 아니다.
+확인일: **2026-10-24 (Asia/Seoul)**. Phase 0 완료, Phase 1 읽기 전용 조사 승인.
+도구 연결은 단계 승인과 별개다. Phase 2~9와 모든 실사이트 관리 쓰기는 미승인이다.
 
 ## 운영 원칙 (T-01, T-05, T-06)
 
@@ -226,3 +226,19 @@ Tampermonkey 설치/사용자 스크립트 허용과 ArcaGuard 개발 스크립�
 - 배포 Userscript의 메뉴 권한은 구성/헤더 검사 완료다. API 어댑터/번들에서 메뉴 콜백은 Mock으로 검증했다.
 - 실제 Tampermonkey 메뉴 선택과 arca.live의 새 UI 실행은 직접 미검증이다.
   이전 접속 정책 제한을 유지하며 재접속/우회/보안 설정 변경은 수행하지 않았다.
+
+## Phase 1 재점검 및 조사 Skill
+
+- CLI 등록을 다시 파싱한 결과 Chrome DevTools/Playwright 독립 등록은 없고 세션 전용 도구도 없다.
+  기존 Chrome 확장 브라우저 목록 조회에 성공했다. 실제 arca.live 접근 성공으로 표시하지 않는다.
+- GitHub 앱으로 공개 ArcaRefresher 파일/디렉터리를 읽고 개별 blob의 출처를 기록했다.
+  이 읽기는 참고 구현 조사이며 사이트 접근 제한을 우회하는 경로가 아니다.
+- 새 MCP/확장/전역 설정/프로젝트 의존성을 추가하지 않았다. CLI의 arg0/PATH 경고는
+  등록 목록 읽기를 막지 않았고 이를 해결하기 위한 권한/전역 경로 변경도 하지 않았다.
+- 계획한 `.agents/skills/arcaguard-site-audit/SKILL.md`를 생성하고 직접 읽어 조사에 적용했다.
+  작성은 `create-skill`과 우선 검토한 `skill-creator` 지침을 따랐다. 별도 UI 메타데이터/스크립트는 만들지 않았다.
+- 새 Skill의 현재 세션 카탈로그 자동 노출은 미검증이다. 파일 생성/직접 적용과 자동 발견을 구별한다.
+- 공식 `quick_validate.py`는 제공 Python에 PyYAML이 없어 실행할 수 없었다.
+  새 의존성을 설치하지 않고 단순 frontmatter의 필수 값/명명/길이/미완성 표식 및 문서 경로를 대체 검사해 통과했다.
+  이 검사는 공식 YAML 검증기 통과나 독립 행동 평가로 보고하지 않는다.
+- 이 절의 작업은 개발 전용이다. Skill/근거 Fixture는 Userscript 번들에 추가하지 않는다.

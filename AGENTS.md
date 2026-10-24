@@ -3,10 +3,11 @@
 - Treat `docs/REQUIREMENTS.md` (Specification 1.3), `docs/OPERATING_REQUIREMENTS.md`
   and `docs/TOPIC_POLICIES.md` as the current product requirements.
 - Apply Tooling Specification 1.1 through `docs/TOOLING.md`; tool setup is not phase approval.
-- Current approval: **Phase 0 only**. Read `docs/PHASE_STATUS.md` before working.
+- Current approval: **Phase 1 read-only structure investigation** (approved 2026-10-24).
+  Phase 0 and the explicit UI additions below are complete. Read `docs/PHASE_STATUS.md` before working.
 - Explicit UI additions approved: launcher positioning, persistence/reset, position locking,
   visibility toggle, and a dedicated administrator appearance screen with recovery entries.
-  This does not approve Phase 5 general settings or later moderation features.
+  Phase 2 onward, Phase 5 general settings, and all live administrative writes remain unapproved.
 - Stop after the approved phase; obtain user approval before the next phase.
 - Runtime: Tampermonkey; JavaScript ES Modules; Vite + vite-plugin-monkey;
   Vitest; ESLint; Korean user-facing UI. No required paid service or server.
