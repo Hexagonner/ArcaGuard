@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "provenance": "user-provided-text-and-screenshot-anonymized",
+  "observedOn": "2026-10-24",
+  "exampleValuesSynthetic": true,
+  "liveDomVerified": false,
+  "selectors": null,
+  "notification": {
+    "siteNative": true,
+    "enabledByAdministratorChoice": true,
+    "messageExample": "채널에 새로운 신고가 있습니다.",
+    "detailUrlExample": "https://arca.live/reports/b/example_channel/REPORT_EXAMPLE_02",
+    "clickOpensDetail": "user-confirmed",
+    "notificationCountIsReportCount": false,
+    "readAcknowledgementSideEffects": "unverified"
+  },
+  "detailFieldLabels": ["신고 코드", "신고 채널", "신고 유형", "대상", "작성자명", "최초 신고 시각", "총 신고된 횟수", "신고 사유", "처리 상태", "조치"],
+  "detailExample": {
+    "reportId": "REPORT_EXAMPLE_02",
+    "channelId": "example_channel",
+    "reportedTypeDisplay": "ARTICLE",
+    "targetUrl": "https://arca.live/b/example_channel/10000002",
+    "targetAuthorDisplayName": "테스트작성자A",
+    "firstReportedAtDisplay": "2026-01-01 12:05:00",
+    "siteReportedCountDisplay": "1번",
+    "uniqueReporterCount": null,
+    "reasons": [
+      {
+        "reporterDisplayName": "ExampleReporter",
+        "reporterProfileUrl": "https://arca.live/u/@ExampleReporter/00000001",
+        "reporterKey": null,
+        "reasonText": "광고 의심 테스트용 신고",
+        "containsDefaultKeyword": true
+      }
+    ],
+    "processingStatusDisplay": "대기",
+    "actionFieldVisible": true,
+    "actionControls": null
+  },
+  "unverified": ["notification-delivery-completeness", "stable-reporter-identity", "report-grouping-semantics", "status-semantics", "action-controls-and-permissions", "background-read-side-effects", "live-dom"],
+  "notes": [
+    "All account names, links, identifiers, timestamps and reason text here are synthetic. Do not open these example URLs.",
+    "The supplied real reason contains the default keyword, but the reason text is replaced in this fixture.",
+    "A matching report reason selects analysis candidates; it is not article advertising evidence or permission to act.",
+    "The same synthetic reporter profile is displayed with and without a suffix across the two fixtures. Stable identity is still unverified.",
+    "The action label was supplied, but no actionable control or deletion semantics were verified."
+  ]
+}
