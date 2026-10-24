@@ -237,3 +237,12 @@ PLAN, ARCHITECTURE, TEST_PLAN, SECURITY, SITE_VERIFICATION, DECISIONS, README,
   준비한 개발 설치 주소에서 사용자에게 설치 확인을 요청했다.
 - SETUP.md/README/TOOLING/DECISIONS에 현재 연결 상태와 설치 절차를 반영했다.
   관리 API 요청이나 게시글 변경은 없었고 Phase 1~9 기능 구현은 시작하지 않았다.
+
+### 실제 Chrome 설치 확인 후속 기록
+
+- 사용자가 실제 Chrome에서 ArcaGuard 개발 스크립트 설치 완료를 확인했다.
+  Tampermonkey/사용자 스크립트 허용/개발 스크립트 설치는 사용자 확인 완료로 갱신한다.
+- Codex 내장 브라우저에서는 확인되지 않는다는 사용자 설명을 함께 기록한다.
+  실제 Chrome 설치와 내장 브라우저의 확장 상태를 동일시하지 않는다.
+- 실제 페이지에서의 스크립트 실행/핫 리로드 및 관리자 기능은 에이전트 직접 미검증이다.
+- 원격 main 동기화를 확인했으며 이후 문서 갱신도 같은 저장소에 반영한다.
