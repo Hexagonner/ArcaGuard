@@ -2,21 +2,41 @@ import { PHASE_STATUS } from '../core/phase.js';
 import styles from './styles.css?inline';
 import { createPositionStore } from '../adapters/runtime/positionStore.js';
 import { bindPosition } from './position.js';
+import { createAdminPage } from './adminPage.js';
+import { createUiPreferences } from '../adapters/runtime/uiPreferences.js';
 
 const HOST_ID = 'arcaguard-root';
+const sessions = new WeakMap();
+
+/** Remove UI and global listeners, for explicit teardown and isolated tests.
+ * @param {Document} document Owning document.
+ */
+export function unmountTestPanel(document) {
+  const host = document.getElementById(HOST_ID);
+  if (!host) return;
+  sessions.get(host)?.abort();
+  sessions.delete(host);
+  host.remove();
+}
 
 /**
  * Mount a local-only smoke-test panel, isolated from the host page's styles.
  * @param {Document} document Page document (injectable for tests).
+ * @param {{registerMenu?: Function}} options Runtime injection for the recovery menu.
  * @returns {HTMLElement} Existing or newly mounted UI host.
  */
-export function mountTestPanel(document) {
+export function mountTestPanel(document, { registerMenu = () => false } = {}) {
   const existing = document.getElementById(HOST_ID);
   if (existing) return existing;
 
   const host = document.createElement('div');
   host.id = HOST_ID;
   const shadow = host.attachShadow({ mode: 'open' });
+  const controller = new document.defaultView.AbortController();
+  sessions.set(host, controller);
+  const preferenceStore = createUiPreferences(document.defaultView);
+  let preferences = preferenceStore.load();
+  let returnFocus = null;
   const style = document.createElement('style');
   style.textContent = styles;
 
@@ -73,7 +93,56 @@ export function mountTestPanel(document) {
   positionStatus.setAttribute('role', 'status');
   positionStatus.setAttribute('aria-live', 'polite');
 
+  const adminButton = element('button', '관리자 설정 열기', 'open-admin');
+  adminButton.type = 'button';
+  const shortcutHelp = element('p', '버튼 숨김/위치 고정: 관리자 설정 · Alt + Shift + G', 'note');
+  const applyPreferences = () => {
+    launcher.hidden = !preferences.visible;
+    launcher.dataset.locked = String(preferences.locked);
+    launcher.title = preferences.locked ? '위치 고정됨 · 클릭하여 패널 열기'
+      : '드래그로 위치 이동 · Alt + 방향키로 10px 이동';
+    reset.disabled = preferences.locked;
+    admin.update(preferences);
+    if (!preferences.visible) {
+      panel.hidden = true;
+      launcher.setAttribute('aria-expanded', 'false');
+    }
+    positioning.layout();
+  };
+  const closeAdmin = () => {
+    admin.element.hidden = true;
+    if (returnFocus?.isConnected && returnFocus !== host && !returnFocus.closest('[hidden]')) returnFocus.focus({ preventScroll: true });
+    else if (preferences.visible) launcher.focus({ preventScroll: true });
+  };
+  const openAdmin = () => {
+    if (!host.isConnected || !admin.element.hidden) return;
+    returnFocus = shadow.activeElement ?? document.activeElement;
+    positioning.cancel();
+    panel.hidden = true;
+    launcher.setAttribute('aria-expanded', 'false');
+    admin.element.hidden = false;
+    admin.update(preferences);
+    admin.close.focus({ preventScroll: true });
+  };
+  const admin = createAdminPage(document, {
+    onClose: closeAdmin,
+    onChange(name, checked) {
+      positioning.cancel();
+      preferences = { ...preferences, [name]: checked };
+      const saved = preferenceStore.save(preferences);
+      applyPreferences();
+      admin.announce(saved ? '설정을 저장했습니다.' : '설정을 적용했습니다. 저장할 수 없어 이 화면에서만 유지됩니다.');
+    },
+    onAdjust() { closeAdmin(); launcher.focus({ preventScroll: true }); },
+    onReset() {
+      const saved = positioning.resetPosition();
+      admin.announce(saved ? '기본 위치로 되돌렸습니다.' : positionStatus.textContent);
+    },
+  });
+  adminButton.addEventListener('click', openAdmin);
+
   const setOpen = (open) => {
+    if (open && (!preferences.visible || !admin.element.hidden)) return;
     panel.hidden = !open;
     positioning.layout();
     launcher.setAttribute('aria-expanded', String(open));
@@ -85,19 +154,49 @@ export function mountTestPanel(document) {
   });
   close.addEventListener('click', () => setOpen(false));
   shadow.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && !panel.hidden) {
+    if (event.key === 'Escape' && !admin.element.hidden) {
+      event.stopPropagation();
+      closeAdmin();
+    } else if (event.key === 'Escape' && !panel.hidden) {
       event.stopPropagation();
       setOpen(false);
     }
   });
+
+  document.addEventListener('keydown', (event) => {
+    if (!host.isConnected) return;
+    if (event.altKey && event.shiftKey && !event.ctrlKey && !event.metaKey && !event.isComposing
+      && (event.code === 'KeyG' || event.key?.toLowerCase() === 'g')) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (admin.element.hidden) openAdmin();
+      else closeAdmin();
+    } else if (event.key === 'Tab' && !admin.element.hidden) {
+      const controls = [...admin.element.querySelectorAll('*')]
+        .filter((node) => ['BUTTON', 'INPUT'].includes(node.tagName) && !node.disabled);
+      const first = controls[0];
+      const last = controls.at(-1);
+      if (!admin.element.contains(shadow.activeElement) || (event.shiftKey && shadow.activeElement === first)) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus({ preventScroll: true });
+      } else if (!event.shiftKey && shadow.activeElement === last) {
+        event.preventDefault();
+        first.focus({ preventScroll: true });
+      }
+    }
+  }, { capture: true, signal: controller.signal });
   check.addEventListener('click', () => {
     result.textContent = '화면 응답 정상 · 사이트 요청 없이 확인했습니다.';
   });
 
-  panel.append(header, title, intro, mode, list, note, check, result, positionHelp, reset, positionStatus);
-  shadow.append(style, panel, launcher);
+  panel.append(header, title, intro, mode, list, note, check, result, positionHelp, reset, positionStatus, adminButton, shortcutHelp);
+  shadow.append(style, panel, launcher, admin.element);
   document.body.append(host);
   const positioning = bindPosition({ host, launcher, panel, reset, status: positionStatus,
-    store: createPositionStore(document.defaultView) });
+    store: createPositionStore(document.defaultView), isLocked: () => preferences.locked, signal: controller.signal });
+  applyPreferences();
+  const menuAvailable = registerMenu(openAdmin);
+  admin.setMenuAvailable(menuAvailable);
+  if (!menuAvailable) shortcutHelp.textContent = '관리자 설정: Alt + Shift + G (이 화면에는 Tampermonkey 메뉴가 연결되지 않았습니다.)';
   return host;
 }

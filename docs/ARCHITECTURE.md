@@ -4,6 +4,15 @@ Phase 0 실행 경로: `src/main.js` → `src/ui/testPanel.js` → Shadow DOM �
 스타일은 CSS inline import로 번들에 포함해 Shadow DOM 내부에 삽입한다.
 `src/core/phase.js`는 현재 단계의 표시 상태이며 저장 설정이나 관리 정책 구현이 아니다.
 
+사용자 승인 UI 보완: `ui/adminPage.js`는 사이트 안의 전체 화면 설정을 구성하고
+`testPanel.js`가 표시/고정 상태와 포커스/단축키를 연결한다. 별도 서버/사이트 관리 경로를 만들지 않는다.
+`adapters/runtime/uiPreferences.js`가 표시/고정의 버전 값을 검증하고,
+`positionStore.js`의 기존 좌표 값과 별도로 보관한다.
+`userscriptMenu.js`는 vite-plugin-monkey client로 개발 sandbox/배포 API를 연결하고,
+`adminMenu.js`의 주입 가능한 메뉴 등록을 사용한다. UI 단위 테스트는 실제 GM API를 로드하지 않는다.
+전용 설정 화면은 사용자 요청에만 열리고 숨김 상태에서도 단축키/메뉴로 접근할 수 있다.
+이는 Phase 5의 채널/주제/신고/조치 설정 구현과 별개다.
+
 - `core`: 공통 타입/오류/이벤트 (필요한 단계에서 추가).
 - `detection`: 순수 광고 분석. 사이트 DOM/권한과 독립.
 - `application`: 신고 처리/판정/조치 워크플로 조합.

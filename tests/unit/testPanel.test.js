@@ -1,7 +1,8 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { mountTestPanel } from '../../src/ui/testPanel.js';
+import { mountTestPanel, unmountTestPanel } from '../../src/ui/testPanel.js';
 
 afterEach(() => {
+  unmountTestPanel(document);
   document.body.replaceChildren();
   localStorage.clear();
 });

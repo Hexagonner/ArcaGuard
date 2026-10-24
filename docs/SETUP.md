@@ -5,7 +5,7 @@
 ## 현재 상태
 
 - Node.js 24.14.0, npm 11.19.1, Git 2.53.0.windows.1 사용 가능.
-- `npm run check`: lint/테스트 18개/build 및 생성 번들 실행 검사 성공.
+- `npm run check`: lint/테스트 33개/build 및 생성 번들 실행 검사 성공.
 - 로컬 저장소: 현재 프로젝트 폴더, 브랜치 `main`.
 - 공개 원격 저장소: [Hexagonner/ArcaGuard](https://github.com/Hexagonner/ArcaGuard).
 - 원격 이름: `origin`, URL: `https://github.com/Hexagonner/ArcaGuard.git`.
@@ -40,6 +40,25 @@
 화면 소스를 수정한 뒤 로컬 Chrome을 새로고침하여 최신 화면을 확인했다.
 새 위치 기능을 실제 아카라이브에 적용할 때도 페이지를 새로고침한다.
 버튼 위치는 사이트별 localStorage의 전용 키에만 저장하며 localhost와 arca.live 간 공유되지 않는다.
+
+## 관리자 화면 및 숨김 복구 (이번 UI 보완)
+
+- 패널의 **관리자 설정 열기** 또는 **Alt + Shift + G**로 사이트 내 전용 화면을 연다.
+- **ArcaGuard 버튼 표시**: OFF면 버튼을 완전히 숨긴다. **버튼 위치 고정**: ON이면 이동/초기화를 막는다.
+- 숨김 후에도 단축키로 다시 열어 표시 ON으로 복원한다. 단축키는 IME 조합 중에는 동작하지 않는다.
+- 새 스크립트의 Tampermonkey 메뉴에 **ArcaGuard 관리자 설정** 복구 항목을 등록한다.
+  이는 [공식 메뉴 API](https://www.tampermonkey.net/documentation.php?q=GM_registerMenuCommand)를 사용한다.
+  해당 API는 runtime adapter에 두며 메뉴 선택 전에는 화면을 열지 않는다.
+- 이전 개발 설치는 설치 주소를 다시 열어 **업데이트/재설치**한 뒤 사이트를 새로고침한다.
+  메뉴용 메타데이터/개발 연결 키가 바뀌었으므로 이전 wrapper의 새로고침만으로 연결을 보장하지 않는다.
+  빌드 파일 설치 방식이면 새 `dist/ArcaGuard.user.js`로 교체한다. 개발/빌드본 중 하나만 활성화한다.
+- 배포 빌드의 유일한 grant는 `GM_registerMenuCommand`다. 추가 네트워크/쿠키/저장 API 권한은 없다.
+  개발용 wrapper는 vite-plugin-monkey가 생성하는 개발 메타데이터이므로 배포 권한 검사와 구별한다.
+- 실제 Chrome localhost에서 고정/숨김/새로고침 유지/단축키 복구/고정 해제 후 이동을 직접 검증했다.
+  Tampermonkey 메뉴 선택은 실제 확장 화면 접근 제한으로 직접 검증하지 못했다.
+  메뉴 어댑터와 빌드 실행 검사는 API를 Mock하여 등록/콜백/숨김 후 복구를 확인했다.
+- 표시/고정은 위치와 별도 버전 키에 저장한다. 저장 차단 시 현재 화면에만 적용됨을 알린다.
+  기존 위치 값은 보존하며 같은 origin/브라우저에서 새로고침 후 복원한다. 열린 다른 탭에 즉시 동기화하지 않는다.
 
 ## 빌드 파일로 설치하는 대안
 

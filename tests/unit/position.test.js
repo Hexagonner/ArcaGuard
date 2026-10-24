@@ -1,9 +1,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createPositionStore } from '../../src/adapters/runtime/positionStore.js';
-import { mountTestPanel } from '../../src/ui/testPanel.js';
+import { mountTestPanel, unmountTestPanel } from '../../src/ui/testPanel.js';
 
 const KEY = 'arcaguard.ui.position.v1';
 afterEach(() => {
+  unmountTestPanel(document);
   document.body.replaceChildren();
   vi.restoreAllMocks();
   vi.unstubAllGlobals();
@@ -35,7 +36,7 @@ describe('custom launcher position', () => {
     expect(parseFloat(host.style.left)).toBe(parseFloat(original) - 10);
     const savedLeft = host.style.left;
     expect(JSON.parse(localStorage.getItem(KEY)).version).toBe(1);
-    host.remove();
+    unmountTestPanel(document);
     const restored = mountTestPanel(document);
     expect(restored.style.left).toBe(savedLeft);
     restored.shadowRoot.querySelector('.reset-position').click();

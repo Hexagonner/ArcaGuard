@@ -16,7 +16,7 @@ export default defineConfig({
         version: '0.0.0',
         description: '아카라이브 관리자 보조 도구의 개발 기반 및 UI 동작 확인',
         match: ['https://arca.live/*'],
-        grant: ['none'],
+        grant: ['GM_registerMenuCommand'],
         'run-at': 'document-idle',
         noframes: true,
         license: 'MIT',
