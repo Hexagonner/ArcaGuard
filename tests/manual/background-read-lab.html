@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>ArcaGuard · 합성 HTML 읽기 실험</title>
+    <style>
+      body { font: 16px/1.6 system-ui; max-width: 920px; margin: 28px auto; padding: 0 20px; }
+      textarea { width: 100%; min-height: 70px; box-sizing: border-box; }
+      button { margin: 12px 0; padding: 10px 20px; font: inherit; }
+      pre { white-space: pre-wrap; overflow-wrap: anywhere; border: 1px solid #888; padding: 16px; }
+    </style>
+  </head>
+  <body>
+    <h1>합성 HTML 읽기 실험</h1>
+    <p>Phase 1 개발 조사 전용입니다. 실제 사이트·신고·계정·관리 기능에 접근하지 않습니다.</p>
+    <p>응답 문자열, DOMParser, template 해석을 비교합니다. 모든 관측용 주소는 이 로컬 서버입니다.</p>
+    <label for="draft">포커스·작성 내용 보존 확인용 합성 초안</label>
+    <textarea id="draft">검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.</textarea>
+    <button type="button" id="run">로컬 읽기 실험 실행</button>
+    <p id="status" role="status">실행 전</p>
+    <ul id="summary"></ul>
+    <details><summary>원시 관측 결과</summary><pre id="results">결과는 실행 후 표시됩니다.</pre></details>
+    <script type="module" src="/lab.js"></script>
+  </body>
+</html>

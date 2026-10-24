@@ -13,6 +13,9 @@ Phase 0 완료일: **2026-10-24 (Asia/Seoul)**.
   카테고리/버튼/답변 선택 설정과 제출 기능은 미구현이다.
 - 현재 할 일/필요 근거/후속 단계 경계는 PLAN.md의 Phase 1 ‘현재 수행 순서와 마무리 조건’에 정리했다.
   자료·설계 정리는 완료했지만 실사이트 읽기 검증은 미완료다. 기존 site-safety 거절 원문은 TOOL-01에 기록했다.
+- 실행한 추가 조사: Chrome 로컬 합성 읽기 3경로에서 제한 구간의 추가 리소스 요청/스크립트 실행 없음과
+  화면 상태 보존을 관측했다(PLATFORM-03). 실제 사이트 지원 검증은 아니다.
+  알림은 직접 눌러야 읽음 처리된다는 사용자 답변도 확보했다(USR-REPORT-05).
 
 ## 실제 구현된 기능
 
@@ -536,3 +539,28 @@ PLAN, ARCHITECTURE, TEST_PLAN, SECURITY, SITE_VERIFICATION, DECISIONS, README,
 - `npm.cmd run check`: lint 성공, 기존 Vitest **33개 통과**, build/메타데이터/번들 UI 검사 성공.
   `git diff --check` 통과, 실행 번들/원문 보존 해시 동일. 코드/의존성/운영 설정/실사이트 요청 변경 없음.
 - 변경: PLAN/SITE_VERIFICATION/TOOLING/DECISIONS/이 보고. 후속 Phase 승인이나 전체 Phase 1 완료로 해석하지 않는다.
+
+## Phase 1 — 무방해 읽기 로컬 실험 수행
+
+기록일: **2026-10-24 (Asia/Seoul)**. 사용자 ‘지금 해야 할일을 수행하라’ 지시에 따라 독립적으로 가능한
+브라우저 일반 읽기 동작 실험을 실제 Chrome에서 수행했다. Phase 1 전체 완료는 아니다.
+
+- 개발 조사 도구 `scripts/serve-read-lab.js`, `tests/manual/background-read-lab.html`,
+  `tests/manual/backgroundReadLab.js`를 추가했다. 고정 합성 자료만 다루고 실제 사이트/신고/인증 정보는 사용하지 않는다.
+- 문자열 읽기/분리된 DOMParser/template.content의 3경로를 실행했다.
+  양성 대조 리소스 1건이 서버에 관측됐고 각 700ms 구간의 합성 추가 요청·스크립트/핸들러 실행은 0건이었다.
+  URL/히스토리 길이/스크롤/초안/포커스/선택 범위는 전후 동일했다.
+- `tests/manual/background-read-lab.chrome.json`과 `.png`에 결과와 완료 화면을 저장하고 확인했다.
+  작은 합성 사례/한 브라우저/유한 관측 구간의 결과이며 모든 입력/브라우저/지연 요청/IME/성능/CSP/탭 정지를 보장하지 않는다.
+  실제 사이트 DOM·권한·알림 읽음·신고/글 상태 보존·관리 쓰기도 미검증이다. NTF-05 전체 통과로 집계하지 않는다.
+- 초기에 명령 샌드박스의 로컬 소켓 제한으로 실험 서버 연결이 실패했다.
+  같은 루프백 서버 실행 권한으로 해결했으며 차단된 사이트의 정책 변경/다른 도구 접속은 없다.
+  완료 화면 증거를 저장한 뒤 조사용 Chrome 탭과 로컬 서버를 종료했다.
+- 사용자는 알림을 직접 눌러야 읽음 처리된다고 답했다. USR-REPORT-05로 기록해 해당 질문을 완료했다.
+  현재 남은 사용자 화면 자료는 신고 목록 필터·페이지 영역과 게시글 수정의 글머리 선택 목록이다.
+  화면 자료만으로 실사이트 DOM/배경 요청까지 검증됐다고 보고하지 않는다.
+- `npm.cmd run check`: 새 조사 스크립트 포함 lint 성공, 기존 Vitest **33개 통과**,
+  build/메타데이터/번들 UI 실행 검사 성공. 별도 Chrome 수동 실험 **3경로**와 혼동하지 않는다.
+  후속 인수 계획 78개는 그대로 미실행이다. 관측 JSON 구조/결과 검사와 `git diff --check`도 통과했다.
+- 실행 번들/원문 보존 해시 동일. 운영 수집기/감시/AI/이동/신고 제출 기능과 설정을 추가하지 않았다.
+  변경: 조사 도구·결과 JSON/이미지, PLAN/SITE_VERIFICATION/TEST_PLAN/TOOLING/DECISIONS/이 보고.

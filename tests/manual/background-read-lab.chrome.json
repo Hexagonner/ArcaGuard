@@ -1,0 +1,101 @@
+{
+  "scope": "localhost-synthetic-only",
+  "observedAt": "2026-10-24T14:20:15.989Z",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "observationWindowMsPerCase": 700,
+  "positiveControlRequests": 1,
+  "observations": [
+    {
+      "mode": "text",
+      "extractedText": null,
+      "extractedHref": null,
+      "extractedImage": null,
+      "resourceRequests": [],
+      "scriptOrHandlerExecutions": 0,
+      "pageStatePreserved": true,
+      "before": {
+        "url": "http://127.0.0.1:5184/",
+        "historyLength": 2,
+        "focusId": "draft",
+        "value": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 0
+      },
+      "after": {
+        "url": "http://127.0.0.1:5184/",
+        "historyLength": 2,
+        "focusId": "draft",
+        "value": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 0
+      }
+    },
+    {
+      "mode": "domparser",
+      "extractedText": "합성 문서",
+      "extractedHref": "/probe/link",
+      "extractedImage": "/probe/image.png",
+      "resourceRequests": [],
+      "scriptOrHandlerExecutions": 0,
+      "pageStatePreserved": true,
+      "before": {
+        "url": "http://127.0.0.1:5184/",
+        "historyLength": 2,
+        "focusId": "draft",
+        "value": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 0
+      },
+      "after": {
+        "url": "http://127.0.0.1:5184/",
+        "historyLength": 2,
+        "focusId": "draft",
+        "value": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 0
+      }
+    },
+    {
+      "mode": "template",
+      "extractedText": "합성 문서",
+      "extractedHref": "/probe/link",
+      "extractedImage": "/probe/image.png",
+      "resourceRequests": [],
+      "scriptOrHandlerExecutions": 0,
+      "pageStatePreserved": true,
+      "before": {
+        "url": "http://127.0.0.1:5184/",
+        "historyLength": 2,
+        "focusId": "draft",
+        "value": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 0
+      },
+      "after": {
+        "url": "http://127.0.0.1:5184/",
+        "historyLength": 2,
+        "focusId": "draft",
+        "value": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 0
+      }
+    }
+  ],
+  "limitations": [
+    "한 브라우저의 소규모 합성 사례",
+    "실사이트 DOM/권한/읽음 부작용 미검증",
+    "모든 입력의 안전성·성능·IME 보존을 보장하지 않음"
+  ]
+}
