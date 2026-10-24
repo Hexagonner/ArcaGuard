@@ -1,7 +1,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { mountTestPanel } from '../../src/ui/testPanel.js';
 
-afterEach(() => document.body.replaceChildren());
+afterEach(() => {
+  document.body.replaceChildren();
+  localStorage.clear();
+});
 
 describe('Phase 0 test panel', () => {
   it('starts closed and only mounts once', () => {

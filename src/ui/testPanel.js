@@ -1,5 +1,7 @@
 import { PHASE_STATUS } from '../core/phase.js';
 import styles from './styles.css?inline';
+import { createPositionStore } from '../adapters/runtime/positionStore.js';
+import { bindPosition } from './position.js';
 
 const HOST_ID = 'arcaguard-root';
 
@@ -29,6 +31,7 @@ export function mountTestPanel(document) {
   launcher.type = 'button';
   launcher.setAttribute('aria-expanded', 'false');
   launcher.setAttribute('aria-controls', 'arcaguard-panel');
+  launcher.title = '드래그로 위치 이동 · Alt + 방향키로 10px 이동';
 
   const panel = element('section', undefined, 'panel');
   panel.id = 'arcaguard-panel';
@@ -63,13 +66,23 @@ export function mountTestPanel(document) {
   result.setAttribute('role', 'status');
   result.setAttribute('aria-live', 'polite');
 
+  const positionHelp = element('p', '버튼을 드래그해 옮기세요. 버튼에 초점을 맞추고 Alt + 방향키로도 이동할 수 있습니다.', 'position-help');
+  const reset = element('button', '기본 위치로 되돌리기', 'reset-position');
+  reset.type = 'button';
+  const positionStatus = element('p', '', 'position-status');
+  positionStatus.setAttribute('role', 'status');
+  positionStatus.setAttribute('aria-live', 'polite');
+
   const setOpen = (open) => {
     panel.hidden = !open;
+    positioning.layout();
     launcher.setAttribute('aria-expanded', String(open));
     if (open) close.focus();
     else launcher.focus();
   };
-  launcher.addEventListener('click', () => setOpen(panel.hidden));
+  launcher.addEventListener('click', (event) => {
+    if (!positioning.consumeClick(event)) setOpen(panel.hidden);
+  });
   close.addEventListener('click', () => setOpen(false));
   shadow.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && !panel.hidden) {
@@ -81,8 +94,10 @@ export function mountTestPanel(document) {
     result.textContent = '화면 응답 정상 · 사이트 요청 없이 확인했습니다.';
   });
 
-  panel.append(header, title, intro, mode, list, note, check, result);
+  panel.append(header, title, intro, mode, list, note, check, result, positionHelp, reset, positionStatus);
   shadow.append(style, panel, launcher);
   document.body.append(host);
+  const positioning = bindPosition({ host, launcher, panel, reset, status: positionStatus,
+    store: createPositionStore(document.defaultView) });
   return host;
 }

@@ -4,6 +4,8 @@
   and `docs/TOPIC_POLICIES.md` as the current product requirements.
 - Apply Tooling Specification 1.1 through `docs/TOOLING.md`; tool setup is not phase approval.
 - Current approval: **Phase 0 only**. Read `docs/PHASE_STATUS.md` before working.
+- Explicit UI addition approved: launcher positioning, position persistence and reset only.
+  This does not approve Phase 5 general settings or later moderation features.
 - Stop after the approved phase; obtain user approval before the next phase.
 - Runtime: Tampermonkey; JavaScript ES Modules; Vite + vite-plugin-monkey;
   Vitest; ESLint; Korean user-facing UI. No required paid service or server.
