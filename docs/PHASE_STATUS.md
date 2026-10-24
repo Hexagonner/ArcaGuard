@@ -216,3 +216,24 @@ PLAN, ARCHITECTURE, TEST_PLAN, SECURITY, SITE_VERIFICATION, DECISIONS, README,
 - 출력 `.user.js` SHA-256 동일. 실행 코드/의존성/실제 설정/전역 도구는 수정하지 않았다.
 - 주제 설정/예외/이미지 링크 수집·판정은 **미구현**. 실사이트 조사/요청/글 이동은 수행하지 않았다.
   Phase 1~9 구현은 시작하지 않았다.
+
+## GitHub 공개 저장소 및 Tampermonkey 개발 환경 연결
+
+확인일: **2026-10-24 (Asia/Seoul)**. 사용자가 환경 연결과 공개 신규 저장소 생성을 승인했다.
+
+- 로컬 Git 저장소를 main 브랜치로 초기화하고 공개 `Hexagonner/ArcaGuard` 저장소를 생성했다.
+- `origin`: `https://github.com/Hexagonner/ArcaGuard.git`, main은 origin/main을 추적한다.
+- 초기 커밋 `a63f1e3b00ec6fde4a29d834d07f249aad29846f`를 업로드했고
+  `git ls-remote`로 로컬/원격 일치를 확인했다. 이 기록은 해당 초기 업로드 검증을 뜻한다.
+- 저장소 범위 작성자는 GitHub ID 기반 noreply 주소를 사용한다. 전역 Git 설정 변경 없음.
+- node_modules/dist/환경 변수/자격 증명 경로를 제외하고 42개 프로젝트 파일을 최초 추적했다.
+- 초기 명세서 보존본은 Git의 줄바꿈 변환에서도 제외하여 원본 바이트를 보존한다.
+  Markdown의 의도된 줄바꿈 공백은 유지하며 `git diff --cached --check`를 통과했다.
+- `npm.cmd run check`: lint, 기존 Vitest 3개, build/번들 실행 검사 성공.
+- 개발 서버 `127.0.0.1:5173` 시작. `/preview.html`과
+  `/__vite-plugin-monkey.install.user.js` HTTP 200 및 Userscript 헤더 확인.
+- Tampermonkey 설치/사용자 스크립트 허용은 사용자 확인 완료.
+  Chrome 제어 미연결로 ArcaGuard 개발 스크립트 설치/실행은 에이전트 직접 미검증이다.
+  준비한 개발 설치 주소에서 사용자에게 설치 확인을 요청했다.
+- SETUP.md/README/TOOLING/DECISIONS에 현재 연결 상태와 설치 절차를 반영했다.
+  관리 API 요청이나 게시글 변경은 없었고 Phase 1~9 기능 구현은 시작하지 않았다.
