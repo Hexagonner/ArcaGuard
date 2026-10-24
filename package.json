@@ -1,0 +1,26 @@
+{
+  "name": "arcaguard",
+  "version": "0.0.0",
+  "private": true,
+  "description": "아카라이브 관리자 보조 Userscript — Phase 0 개발 기반",
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": "^22.13.0 || ^24.0.0 || >=26.0.0" },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && node scripts/verify-build.js",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "npm run lint && npm run test && npm run build"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.13.0",
+    "globals": "17.13.0",
+    "jsdom": "29.1.1",
+    "vite": "8.3.5",
+    "vite-plugin-monkey": "8.1.1",
+    "vitest": "5.0.5"
+  }
+}

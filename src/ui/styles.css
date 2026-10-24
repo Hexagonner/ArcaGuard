@@ -1,0 +1,33 @@
+:host {
+  all: initial;
+  position: fixed;
+  z-index: 2147483000;
+  right: 24px;
+  bottom: 24px;
+  color: #172b3a;
+  font: 14px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+button { font: inherit; cursor: pointer; }
+button:focus-visible { outline: 3px solid #3377c7; outline-offset: 4px; }
+.launcher { display: block; margin-left: auto; border: 0; border-radius: 999px; padding: 13px 22px; background: #173e35; color: white; font-weight: 700; box-shadow: 0 5px 20px #172b3a26; }
+.launcher:hover, .check:hover { background: #245647; }
+.panel { width: min(380px, calc(100vw - 32px)); max-height: calc(100dvh - 108px); overflow-y: auto; margin-bottom: 12px; padding: 24px; border: 1px solid #dbe3df; border-radius: 20px; background: #fff; box-shadow: 0 18px 70px #172b3a26; }
+header { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.eyebrow { color: #596b63; font-size: 11px; font-weight: 700; letter-spacing: .06em; }
+.close { padding: 4px 8px; border: 1px solid #dbe3df; border-radius: 6px; background: white; color: #42564c; font-size: 12px; }
+h2 { margin: 20px 0 8px; font-size: 25px; letter-spacing: -.05em; }
+p { margin: 0; }
+.intro { color: #596b63; }
+.mode { display: inline-block; margin-top: 20px; border-radius: 6px; padding: 5px 10px; background: #edf4ef; color: #315a45; font-size: 12px; font-weight: 700; }
+.statuses { margin: 12px 0 16px; }
+.statuses > div { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #edf0ee; }
+dt { color: #596b63; }
+dd { margin: 0; font-weight: 600; }
+.note { color: #63736c; font-size: 12px; }
+.check { width: 100%; margin-top: 20px; border: 0; border-radius: 9px; padding: 11px 14px; background: #173e35; color: white; font-weight: 600; }
+.result { min-height: 38px; margin-top: 12px; color: #596b63; font-size: 12px; }
+@media (max-width: 480px) { :host { right: 16px; bottom: 16px; } .panel { padding: 20px; } }
+@media (prefers-reduced-motion: no-preference) { button { transition: background-color .15s; } }

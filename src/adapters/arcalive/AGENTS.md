@@ -1,0 +1,23 @@
+# ArcaLive adapter rules
+
+- Phase 0 creates this boundary only; no site selectors or administration requests yet.
+- Use only observed site structures. Document each selector's source and verification
+  date in `docs/SITE_VERIFICATION.md` before adding it.
+- Never infer report list structure, moderator authority or category-change endpoints.
+- Separate public page reading from privileged reads and all administrative writes.
+- Moderator menu presence does not establish category-change permission.
+- Stop on permission failures or changed structure; do not retry guessed alternatives.
+- Re-read current article state before and after every future approved action.
+- Live site tests require explicit user approval; begin with read-only tests.
+- Category-change testing additionally requires approval for one named test article.
+- If trash-category semantics imply deletion, do not enable automated movement.
+- No automatic deletion, comment deletion or account-ban code.
+- Until administrative UI is verified, future integrations use fixtures and mocks.
+- Read the user's selected channel and destination from that channel's configuration;
+  verify actual permissions, category ID and semantics. Never hardcode test channel/category values.
+- Read target URL, reporter display name, stable account identity and reason from verified
+  site fields. A name in report text is not identity; never invent IDs for anonymous reports.
+- Re-read current category and respect moves by other moderators. Do not overwrite handled
+  work, re-move an already handled target or infer old move history from arbitrary categories.
+- Collect actual clickable-image destinations only from verified article content structures;
+  distinguish href from image src and OCR/QR data. Do not click links or execute handlers to discover destinations.

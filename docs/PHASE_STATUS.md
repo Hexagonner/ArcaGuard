@@ -1,0 +1,218 @@
+# Phase 0 완료 보고
+
+완료일: **2026-10-24 (Asia/Seoul)**.
+
+- 현재 승인: Phase 0만.
+- Phase 0: **완료** — 개발 기반 구축 및 아래 로컬 검증 통과.
+- Phase 1~9: 미착수 / 미승인. 다음 단계는 시작하지 않았다.
+
+## 실제 구현된 기능
+
+- JavaScript ESM, Vite + vite-plugin-monkey Userscript 개발/빌드.
+- `https://arca.live/*`, document-idle, noframes, grant none 메타데이터.
+- 한국어 ArcaGuard 버튼, Shadow DOM 테스트 패널, 열기/닫기/Escape 및 포커스 복원.
+- Simulation/감시 OFF/자동 이동 OFF/권한 미검증 표시 및 로컬 UI 응답 확인 버튼.
+- 재삽입 방지. 사이트 데이터 수집/분석이나 관리 요청은 포함하지 않는다.
+- `/preview.html` 로컬 미리보기, ESLint, Vitest, 생성 번들 검사.
+- 루트/사이트 어댑터 개발 지침과 Phase 0~9 계획, 원문 명세 보존.
+
+표시 상태는 저장된 설정이나 실제 권한 검증 결과가 아니다.
+아직 설정 저장/불러오기, 채널 등록, 광고 탐지, 신고 감시, OCR, AI,
+알림, 글머리 이동을 구현하지 않았다.
+
+## 생성 파일과 이유
+
+- `AGENTS.md`: 프로젝트 지속 지침과 현재 승인 단계.
+- `src/adapters/arcalive/AGENTS.md`: 검증된 사이트 구조/권한/관리 조치 경계.
+- `package.json`, `package-lock.json`: 실행 명령, 호환 의존성의 정확한 버전/재현 설치.
+- `vite.config.js`: 로컬 서버, 메타데이터, Userscript 진입점/출력.
+- `vitest.config.js`: 사이트/빌드 플러그인과 분리한 DOM 테스트 환경.
+- `eslint.config.js`: ESM 코드 및 실행 환경별 코드 검사.
+- `.gitignore`, `.gitattributes`, `LICENSE`: 생성물 제외, 줄바꿈 및 MIT 라이선스.
+- `preview.html`: Tampermonkey 없이 확인 가능한 로컬 테스트 페이지.
+- `src/main.js`, `src/core/phase.js`: 초기 실행과 단계 표시 계약.
+- `src/ui/testPanel.js`, `src/ui/styles.css`: 한국어 테스트 UI와 격리 스타일.
+- `scripts/verify-build.js`: 생성 번들의 메타데이터/범위/구문/DOM 실행 검사.
+- `tests/unit/testPanel.test.js`: 기본 UI 동작과 네트워크/저장소 미사용 검사.
+- `tests/manual/README.md`, `tests/manual/phase0-desktop.png`,
+  `tests/manual/phase0-narrow.png`: 실제 로컬 브라우저 검증 기록과 화면.
+- `README.md`: 실행, 설치, 현재 구현 범위 및 제한.
+- `docs/PLAN.md`, `docs/ARCHITECTURE.md`: 단계 계획 및 계층 경계.
+- `docs/REQUIREMENTS.md`: 제공된 Specification 1.0 원문 복사.
+- `docs/SECURITY.md`, `docs/TEST_PLAN.md`: 안전 원칙과 단계별 검증 계획.
+- `docs/SITE_VERIFICATION.md`: 실제 사이트의 미검증 현황을 명시.
+- `docs/DECISIONS.md`, `docs/PHASE_STATUS.md`: 근거 있는 결정과 이 완료 보고.
+- `src/detection`, `src/application`, `src/adapters/runtime`, `src/storage`,
+  `src/utils`, `tests/fixtures`, `tests/integration`의 `.gitkeep`:
+  후속 계층의 디렉터리만 유지. 구현 모듈로 간주하지 않는다.
+- `dist/ArcaGuard.user.js`: 실제 생성된 설치 대상 파일 (5,450 bytes, 생성물).
+
+## 실행한 검증과 결과
+
+검증 환경: Windows PowerShell, Node.js 24.14.0, npm 11.19.1.
+
+- `npm.cmd install --fetch-timeout=30000 --fetch-retries=1`: 성공.
+  187개 패키지 추가, 188개 감사, 당시 알려진 취약점 0건.
+- `npm.cmd run lint`: 성공, 경고/오류 없음.
+- `npm.cmd run test`: 성공, 테스트 파일 1개 / 테스트 3개 통과.
+- `npm.cmd run build`: 성공, `dist/ArcaGuard.user.js` 생성.
+  헤더/적용 호스트/권한/iframe 제외/외부 리소스 없음/구문 검사와
+  생성된 번들의 JSDOM 실행, 스타일 포함, UI 열기 및 응답 확인까지 통과.
+- 수정 후 `npm.cmd run check`: lint → test → build 전체 재실행 성공.
+- `npm.cmd run dev`: 기본 5173 포트에서 서버 시작 성공.
+- 브라우저 접근 검증은 호스트의 `npm.cmd run dev -- --port 5174`로 실행.
+  `/preview.html` HTTP 200 및 올바른 제목 확인.
+- `/__vite-plugin-monkey.install.user.js`: HTTP 200 및 Userscript 헤더 확인.
+- 로컬 브라우저 1280×720, 390×844: 패널 표시, 기본 상태, 버튼 응답,
+  Escape 닫힘과 포커스 복원 확인. 좁은 화면에서 패널 잘림 없음.
+  화면 크기 재정의는 검사 후 해제했다.
+
+PowerShell에서 npm 래퍼의 다중 명령 처리를 피하려고 검증에는 `npm.cmd`를 사용했다.
+일반 터미널에서는 README의 표준 `npm` 명령을 사용할 수 있다.
+
+## 미검증 기능
+
+- Tampermonkey 확장에 실제 설치 및 arca.live 페이지에서 UI 삽입.
+- 로그인/관리자 권한, 신고 목록/사유/수, 사이트 DOM, 글머리 목록/변경/휴지통 의미.
+- 실제 사이트의 CSP/CORS, 확장 프로그램별 동작 및 브라우저별 호환성.
+- 광고 탐지/설정/모니터링 등 후속 단계의 모든 기능.
+
+아카라이브 실사이트에는 접속하지 않았고 실제 게시글/신고에 요청을 보내지 않았다.
+정적/로컬 검증 결과를 실사이트 관리 기능 검증으로 간주하지 않는다.
+
+## 발견된 문제와 처리
+
+- 제한 실행 환경에서 npm DNS 접근 실패: 승인된 네트워크 실행으로 의존성 설치 완료.
+- 제한 환경의 루프백 서버를 브라우저에서 열 수 없음: 호스트 루프백 5174로 검증.
+  접근 불가한 임시 5173 서버는 종료했다. 기본 개발 포트 설정은 5173이다.
+- vite-plugin-monkey 8이 `/`와 `/index.html`을 설치 안내로 대체:
+  미리보기를 `/preview.html`로 분리해 실제 브라우저에서 확인.
+- jsdom 최신 30 계열의 Node 최소 버전이 설치된 Node보다 높음:
+  호환되는 29.1.1로 고정. 환경 전체 업그레이드는 하지 않았다.
+
+## 설계 변경
+
+- 지정된 빈 작업 폴더 자체를 프로젝트 루트로 사용했다.
+- Git 저장소는 없었으며 초기화/커밋은 수행하지 않았다.
+- Phase 0에 불필요한 설정 저장/어댑터/탐지 스텁 대신 필요한 UI만 구현했다.
+- 로컬 미리보기용 HTML과 번들 실행 검사를 추가했다.
+- 명세서의 단계 순서와 안전 기본값에는 변경이 없다.
+
+## 다음 Phase
+
+**Phase 1 — 아카라이브 구조 조사**. 사용자 승인 후 공개 DOM과 ArcaRefresher를 조사하고,
+관리 화면의 접근 가능 여부와 검증 근거를 기록한다. 미확인 관리 기능은 Mock으로
+남기며 쓰기 기능을 구현하거나 실사이트 테스트를 무단 실행하지 않는다.
+
+## Tooling Specification 1.1 부록 반영 완료
+
+반영일: **2026-10-24 (Asia/Seoul)**. Phase 0 완료 및 Phase 1~9 미승인 상태를 유지한다.
+
+- `docs/TOOLING.md` 생성: T-01~T-10 정책, 도입 판단, Skills 범위, 배포 경계,
+  환경/등록/노출/실제 연결 테스트와 한계를 구분해 기록했다.
+- `AGENTS.md` 수정: 기존 도구 우선, 단계별 필요성, 비밀값 보호, 외부 내용 불신,
+  브라우저 조사와 관리 조치 분리, 개발 도구의 배포물 제외 규칙 통합.
+- `docs/PLAN.md` 수정: 각 Phase의 MCP/테스트 도구/프로젝트 Skill 도입 시점 추가.
+- `README.md`, `docs/DECISIONS.md` 수정: 도구 문서 연결과 적용 결정 기록.
+- Node/npm/npx/Codex CLI 버전 및 MCP 등록 목록 확인. 비밀값은 출력/저장하지 않았다.
+- 기존 브라우저의 로컬 미리보기 읽기와 GitHub 앱의 공개 파일 조회 성공.
+- Chrome DevTools/Playwright/OpenAI Docs MCP는 미등록/미노출로 기록했으며 연결 성공으로
+  간주하지 않았다. 프로젝트와 무관한 기존 서버의 연결 테스트는 하지 않았다.
+- 새 MCP 등록/설치/로그인/프로젝트 Skill 생성: **없음**. 전역 도구 설정 변경도 없음.
+- `npm.cmd run check` 재실행: lint 성공, Vitest 3개 통과, build 및 생성 번들 실행 검사 성공.
+- 생성 `.user.js`는 변경 전후 SHA-256이 동일했다. 실행 코드와 의존성은 수정하지 않았다.
+- T-01~T-10 문서 항목, 계획의 4개 Skill 이름, Phase 0 전용 Skill 미생성을 추가 확인했다.
+- CLI 임시 디렉터리/PATH 별칭 권한 경고는 있었으나 조회 명령은 성공했다.
+  신규 설치 실패나 신규 연결 실패는 없으며, 미설치 도구의 검증은 향후 필요 시 수행한다.
+- 실제 아카라이브 조사와 관리자 조치는 수행하지 않았다. 다음 Phase 승인 전 여기서 중단한다.
+
+## Specification 1.1 운영 요구사항 보완 완료
+
+반영일: **2026-10-24 (Asia/Seoul)**. 이번 작업은 명세/지침/테스트 계획 변경이며,
+Phase 0 완료 및 Phase 1~9 미착수/미승인 상태는 유지한다.
+
+### 반영한 요구사항
+
+- 테스트 채널 `https://arca.live/b/prlvate`, 대상 이름 `TEST`를 사용자 지정 조건으로 기록.
+  채널 관리 권한과 TEST의 실제 ID/존재/의미는 아직 `unverified`다.
+- 신고 링크, 사이트 제공 신고자 이름/안정적 계정 식별값, 신고 내용을 검증하도록 정의.
+- 기본 호출어를 `광고)`에서 신고 내용에 포함된 `광고`로 확장.
+  신고 내용 자체는 광고 판정 근거가 아니며 필수 자료/고유성 미확인 시 자동 처리 금지.
+- 같은 대상/같은 계정은 전체 고유 신고자 수와 키워드 포함 고유 신고자 수에 각각 최대 1회 기여.
+  이름 변경/동명이인/익명/재수집/재시작/다중 탭/목록 일부 누락의 처리 기준을 정의.
+- 이미 TEST/검증된 처리 완료 대상과 타 관리자 이동은 건너뛰고 자체 이동 성공과 구별.
+  과거 이력 미확인이나 임의 글머리만으로 기처리 여부를 추정하지 않음.
+- 여러 관리자/PC가 로컬 잠금을 공유한다고 가정하지 않고, 조건부 변경 미지원 시
+  담당 자동 실행 1개 + 관찰 모드를 운영 대안으로 명시. 완전한 동시 실행 보장은 하지 않음.
+- 신고자 정보 최소 보관, 합성 Fixture, 로그 정리/기한 만료 후 안전한 재구성 기준 추가.
+
+### 변경한 파일과 이유
+
+- `docs/REQUIREMENTS.md`: 최신 통합 명세를 Specification 1.1로 개정.
+- `docs/archive/SPECIFICATION_1.0.md`: 최초 제공 명세의 바이트 동일 원본 보존.
+  이전 Phase 0 보고의 'REQUIREMENTS.md 원문 복사' 기록은 이 보완 이전 상태를 뜻한다.
+- `docs/OPERATING_REQUIREMENTS.md`: 추가 운영 조건과 예외/안전 한계의 상세 계약 생성.
+- `AGENTS.md`, `src/adapters/arcalive/AGENTS.md`: 후속 개발이 위 계약을 따르도록 지침 추가.
+- `docs/PLAN.md`, `docs/ARCHITECTURE.md`: 검증/구현 단계와 계층 책임 연결.
+- `docs/SITE_VERIFICATION.md`: 사용자 진술과 실사이트 검증 상태를 구별해 기록.
+- `docs/TEST_PLAN.md`: 합성 자료 기반 후속 인수 시나리오 28개 정의.
+- `docs/SECURITY.md`, `docs/DECISIONS.md`: 신고자 정보/중복 방지와 운영 결정 기록.
+- `docs/TOOLING.md`, `README.md`: 적용 명세 범위/문서 링크/테스트 조건 안내 갱신.
+- `docs/PHASE_STATUS.md`: 이 보완의 실제 범위와 결과 기록.
+
+### 검증 결과와 한계
+
+- `npm.cmd run check`: lint 성공, 기존 Vitest 3개 통과, build 및 생성 번들 실행 검사 성공.
+- 출력 `.user.js`의 SHA-256은 변경 전후 동일. 실행 코드/의존성/실제 설정은 수정하지 않음.
+- 보존한 원문 SHA-256이 최초 제공 첨부 파일과 동일함을 확인.
+- 운영 계약 필드와 계획 시나리오 ID 28개의 존재/고유성, 관련 문서 10개의 내부 링크 12개 확인.
+- **28개는 작성한 테스트 계획 수이며 동작 테스트 통과 수가 아니다.**
+  신고 카운터/키워드 처리/복수 관리자 중복 이동 방지는 아직 구현 전이다.
+- 실제 채널을 열거나 글/신고를 읽거나 이동하지 않았다. 관리자 권한/신고자 식별 가능 여부/
+  TEST 목록/관리자 동시 변경/사이트의 반복 신고 제한은 모두 실사이트 미검증이다.
+- 새 MCP/Skill/개발 의존성은 추가하지 않았다. 후속 Phase는 시작하지 않았다.
+
+## 운영 채널·대상 탭 사용자 선택 조건 명확화
+
+반영일: **2026-10-24 (Asia/Seoul)**. 문서/개발 지침 변경이며 Phase 0 승인 범위를 유지한다.
+
+- 사용자가 설정 화면에서 채널을 추가/변경/삭제하고 채널별 대상 탭을 선택/변경하도록 명확히 했다.
+- 최초 채널/대상은 미설정. prlvate→TEST는 개발 테스트용 선택 예시이며 고정 기본값이나 채널 제한이 아니다.
+- 공통 기처리 판단은 고정 TEST 문자열 대신 채널의 선택 대상과 검증된 처리 이력을 사용한다.
+- 설정 변경 시 해당 채널의 대기 작업 취소/재검토, 이동 직전 설정 버전 재확인,
+  과거 기처리 글의 새 대상 자동 재이동 금지 조건을 추가했다.
+- REQUIREMENTS/OPERATING_REQUIREMENTS/PLAN/ARCHITECTURE/TEST_PLAN/SITE_VERIFICATION,
+  루트/사이트 어댑터 AGENTS, README/DECISIONS를 함께 정리했다.
+- 인수 계획 CFG-05~07을 추가해 예정 사례는 총 31개다. 기능을 구현하거나 이 사례들을 실행한 것은 아니다.
+- `npm.cmd run check`: lint 성공, 기존 Vitest 3개 통과, build 및 번들 실행 검사 성공.
+- 실행 코드/의존성/실제 설정은 바꾸지 않았고 실사이트 요청은 수행하지 않았다.
+  채널 선택/설정 저장 UI 구현은 여전히 승인 전인 Phase 5 계획에 있다.
+
+## Specification 1.2 — 사용자 정의 주제·예외·이미지 링크 보완
+
+반영일: **2026-10-24 (Asia/Seoul)**. 요구사항/계획 보완이며 Phase 0 승인 범위를 유지한다.
+
+- 사용자가 리딩방/쇼핑몰 링크 같은 광고 주제와 거래글/스포일러 등 비광고 주제를
+  추가·수정·삭제·활성화하고 규칙/예외/호출 조건/처리 방식/대상을 설정하도록 정의.
+- 주제명만 있는 항목은 초안이며 자동 분류기를 생성한 것으로 안내하지 않는다.
+- 예외는 범위와 효과를 구별하고 자동 조치 전 평가한다. 오류/시간 초과/주제 대상 충돌은 검토로 보낸다.
+- 주제별 점수를 합산하지 않고 동일 원천 근거를 중복 가산하지 않는다.
+  대상이 같은 복수 주제는 한 번만 조치하며 주제 추가로 기처리 글을 재이동하지 않는다.
+- 이미지 href의 실제 목적지/표시 이미지 URL/OCR 문구/QR 주소를 구별한다.
+  이미지 링크는 OCR/QR OFF에서도 검사하며 목적지 방문/onclick 실행으로 수집하지 않는다.
+- 이미지 확대/외부 CDN/외부 링크만으로 광고를 확정하지 않는다. 실제 게시물 DOM은 아직 미검증이다.
+- 자동 삭제/계정 차단 금지와 기존 신고/권한/설정 버전/기처리 안전 조건을 유지한다.
+
+변경 문서: REQUIREMENTS(1.2), 새 TOPIC_POLICIES, OPERATING_REQUIREMENTS,
+PLAN, ARCHITECTURE, TEST_PLAN, SECURITY, SITE_VERIFICATION, DECISIONS, README,
+루트/사이트 어댑터 AGENTS 및 이 완료 기록. 초기 Specification 1.0 보존본은 변경하지 않았다.
+
+검증 결과:
+
+- `npm.cmd run check`: lint 성공, 기존 Vitest 3개 통과, build 및 생성 번들 실행 검사 성공.
+- 신규 TOP-01~08/LNK-01~08 인수 계획 16개를 추가해 예정 시나리오 총 47개.
+  이 16개/47개는 계획 수이며 기능 테스트 통과 수가 아니다.
+- 관련 문서 10개의 내부 링크 18개, 예정 ID 고유성/주요 계약 항목/초기 원문 보존 확인.
+- 출력 `.user.js` SHA-256 동일. 실행 코드/의존성/실제 설정/전역 도구는 수정하지 않았다.
+- 주제 설정/예외/이미지 링크 수집·판정은 **미구현**. 실사이트 조사/요청/글 이동은 수행하지 않았다.
+  Phase 1~9 구현은 시작하지 않았다.
