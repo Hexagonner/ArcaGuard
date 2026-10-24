@@ -36,8 +36,10 @@
   evaluate exceptions before actions and never interpret topic blocking as deletion or account bans.
 - Distinguish clickable-image destinations from image file URLs and OCR/QR text.
   Never visit untrusted destinations to classify links or treat a link's presence as proof.
-- Validate report target link, site-provided reporter name/account identity and reason;
-  count each verified reporter once per target. Default reason keyword is `광고`.
+- Validate report target link, site-provided reporter name and reason. The user confirmed that
+  the site permits one report per account/target; use the site's current total count without a
+  local reporter-deduplication registry. Default reason keyword is `광고`.
+  Re-reading a report must replace its snapshot, never increment counts; retain work/action deduplication.
 - Respect other moderators' work: skip verified handled/moved targets, re-read before action,
   and never claim local storage guarantees cross-account or cross-device exactly-once writes.
 

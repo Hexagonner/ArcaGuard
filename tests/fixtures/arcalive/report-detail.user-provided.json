@@ -4,6 +4,12 @@
   "observedOn": "2026-10-24",
   "exampleValuesSynthetic": true,
   "liveDomVerified": false,
+  "countPolicy": {
+    "source": "site-current-total",
+    "oneReportPerAccountAndTarget": "user-confirmed",
+    "localReporterDeduplication": false,
+    "snapshotMerge": "replace"
+  },
   "selectors": null,
   "notification": {
     "siteNative": true,
@@ -23,12 +29,11 @@
     "targetAuthorDisplayName": "테스트작성자A",
     "firstReportedAtDisplay": "2026-01-01 12:05:00",
     "siteReportedCountDisplay": "1번",
-    "uniqueReporterCount": null,
+    "siteReportCount": 1,
     "reasons": [
       {
         "reporterDisplayName": "ExampleReporter",
         "reporterProfileUrl": "https://arca.live/u/@ExampleReporter/00000001",
-        "reporterKey": null,
         "reasonText": "광고 의심 테스트용 신고",
         "containsDefaultKeyword": true
       }
@@ -42,7 +47,7 @@
     "All account names, links, identifiers, timestamps and reason text here are synthetic. Do not open these example URLs.",
     "The supplied real reason contains the default keyword, but the reason text is replaced in this fixture.",
     "A matching report reason selects analysis candidates; it is not article advertising evidence or permission to act.",
-    "The same synthetic reporter profile is displayed with and without a suffix across the two fixtures. Stable identity is still unverified.",
+    "The same synthetic reporter profile has different display forms across fixtures; counts come from the site and require no local identity registry.",
     "The action label was supplied, but no actionable control or deletion semantics were verified."
   ]
 }

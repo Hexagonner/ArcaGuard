@@ -19,8 +19,10 @@
   as an automatic fallback. Preserve focus, scroll and drafts; otherwise hold for review.
 - Read the user's selected channel and destination from that channel's configuration;
   verify actual permissions, category ID and semantics. Never hardcode test channel/category values.
-- Read target URL, reporter display name, stable account identity and reason from verified
-  site fields. A name in report text is not identity; never invent IDs for anonymous reports.
+- Read target URL, reporter display name, reason and current site count from verified site fields.
+  Use the site's one-report-per-account/target restriction; do not build a separate reporter registry.
+  Missing stable account IDs alone must not block count use. Never invent IDs or treat text inside
+  the reason as the reporter name. Re-read snapshots without adding their counts together.
 - Re-read current category and respect moves by other moderators. Do not overwrite handled
   work, re-move an already handled target or infer old move history from arbitrary categories.
 - Collect actual clickable-image destinations only from verified article content structures;
