@@ -13,6 +13,9 @@
 - If trash-category semantics imply deletion, do not enable automated movement.
 - No automatic deletion, comment deletion or account-ban code.
 - Until administrative UI is verified, future integrations use fixtures and mocks.
+- Automatic moves require a verified background request path and independent result reads.
+  Never navigate/reload the active page, open a tab/window or drive visible moderator controls
+  as an automatic fallback. Preserve focus, scroll and drafts; otherwise hold for review.
 - Read the user's selected channel and destination from that channel's configuration;
   verify actual permissions, category ID and semantics. Never hardcode test channel/category values.
 - Read target URL, reporter display name, stable account identity and reason from verified

@@ -1,6 +1,6 @@
 # ArcaGuard development rules
 
-- Treat `docs/REQUIREMENTS.md` (Specification 1.2), `docs/OPERATING_REQUIREMENTS.md`
+- Treat `docs/REQUIREMENTS.md` (Specification 1.3), `docs/OPERATING_REQUIREMENTS.md`
   and `docs/TOPIC_POLICIES.md` as the current product requirements.
 - Apply Tooling Specification 1.1 through `docs/TOOLING.md`; tool setup is not phase approval.
 - Current approval: **Phase 0 only**. Read `docs/PHASE_STATUS.md` before working.
@@ -19,6 +19,9 @@
 - Fail closed on uncertain permissions, missing reports, changed DOM or article state.
 - Verify permissions independently for each channel and again before a future action.
 - Never claim a move succeeded without re-reading and verifying the resulting state.
+- Future automatic moves must run without navigation, reload, new tabs/windows, focus or
+  scroll changes, modal dialogs, or interference with typing. Default to quiet records;
+  if a verified background path is unavailable, hold for review rather than take over the UI.
 - Distinguish category changes from deletion, including trash-category semantics.
 - Never store passwords, session cookies or authentication tokens.
 - Never transmit reports/articles to external AI services.
