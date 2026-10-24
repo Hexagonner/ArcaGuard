@@ -8,8 +8,8 @@
 
 - 사용자 확인: 신고 목록/상세 필드, 사이트의 계정별 1회 신고 제한, 현재 총 신고 수,
   신고 알림에서 상세로 연결되는 흐름. 아래 USR-REPORT-01~03이 근거이며 직접 DOM 검증은 아니다.
-- 공개 소스 확인: 게시물/글머리 선택자 후보, 실시간 소켓 교체 방식, 최근 활동 목록으로
-  글 수를 추정하는 방식, 이미지 파일 주소 처리. REF-01~08은 모두 참고 근거다.
+- 공개 소스 확인: 게시물/글머리 선택자 후보, 소켓/목록 갱신, 최근 활동 수, 이미지 주소,
+  로드 감지/경로 구분/설정 저장·동기화/분류 표시 방식. REF-01~12는 모두 참고 근거다.
 - TEST 생성/관리자 전용 설정 완료는 USR-CATEGORY-02에서 사용자가 확인했다.
 - 사용자는 알림을 직접 눌러야 읽음 처리된다고 확인했다(USR-REPORT-05).
   실제 비동기 상세 읽기의 부작용은 직접 검증 전이다.
@@ -339,8 +339,10 @@ blob `9ea283553228cfb73dd2615d9700c0389f1ee8a1` (2026-10-24 조회).
   이들을 클릭 목적지 탐지나 ArcaGuard의 로컬 분석에 재사용하지 않는다. 외부 검색/업로드는 실행하지 않았다.
 - 현재 사이트에서 본문 범위/앵커 관계/확대·동적 링크를 확인해야 하며,
   파일 주소만 확보했을 때는 클릭 목적지 미확인 상태를 유지한다. 목적지 방문은 하지 않는다.
-- 추가 파일 탐색에 사용한 Git tree는 `1b22bbf1939f03629f514362a75697ffa25336c4`이며
-  GitHub 응답의 `truncated`는 false였다. 파일명 탐색과 위 개별 파일 읽기만 수행했고 전체 코드 감사는 아니다.
+- 추가 파일 탐색 기준 커밋은 `1b22bbf1939f03629f514362a75697ffa25336c4`다.
+  후속 브랜치 메타데이터로 실제 root tree `3ba2b00d5f3ee5b1f599f96ca3769191fe2d5e20`을 확인했고
+  두 참조의 경로/blob 목록이 같으며 `truncated`는 false였다. 이전의 commit/tree 명칭 혼동을 정정한다.
+  파일명 탐색과 위 개별 파일 읽기만 수행했고 전체 코드 감사는 아니다.
 
 ## USR-CATEGORY-01 — TEST의 삭제 관련 의미와 이동 화면 진입
 
@@ -489,3 +491,80 @@ USR-CATEGORY-01 당시의 구성 예정 상태를 이 사용자 확인으로 갱
 - 요청했던 글머리 선택 화면을 확보했다. 같은 사진은 다시 요구하지 않으며 사이트 쓰기도 실행하지 않았다.
 - 익명 전사 계약은 `tests/fixtures/arcalive/report-list-and-category.user-provided.json`이다.
   실제 HTML/작동 파서가 아니며 식별값과 동작 검증은 미확인으로 남긴다.
+
+## ArcaRefresher 후속 조사 기준
+
+2026-10-24 공개 develop 브랜치의 커밋 `1b22bbf1939f03629f514362a75697ffa25336c4`
+(커밋 시각 2026-10-22T16:33:59Z), root tree `3ba2b00d5f3ee5b1f599f96ca3769191fe2d5e20`을 확인했다.
+아래 링크는 이 커밋으로 고정했다. 신규 코드 파일 9개를 읽고 기존 ContentCollector 파일 1개를 재대조했다.
+소스를 설치/실행/제품에 복사하지 않았으며 실제 사이트 동작 근거로 승격하지 않는다.
+
+## REF-09 — 목록 갱신·중지·로드 감지
+
+- [AutoRefresher.jsx](https://github.com/lekakid/ArcaRefresher/blob/1b22bbf1939f03629f514362a75697ffa25336c4/src/feature/Board/AutoRefresher/AutoRefresher.jsx),
+  blob `7fddc393561362c815f7255dc3fba982104e5f29`:
+  일반 게시판의 검색/페이지/글 조회 조건에 따라 갱신을 제한하고 관리 체크박스·탭 숨김·API 중지 사유를 구분한다.
+  목록에 마우스 이동이 있으면 갱신을 미루고 새 글 소켓 신호를 사용한다.
+  이는 신고 처리 흐름이나 무방해 백그라운드 감시 지원의 근거가 아니다.
+- [설정](https://github.com/lekakid/ArcaRefresher/blob/1b22bbf1939f03629f514362a75697ffa25336c4/src/feature/Board/AutoRefresher/ConfigMenu/AutoRefresher.jsx),
+  blob `dea2be8f480b22163d7425f0d573bd6829ef59d7`:
+  사용 안 함/갱신 시간/최대 스킵/표시 위치를 선택한다. 이 게시판용 주기와 `p` 조건을
+  관리자 신고 목록의 허용 요청 빈도나 이전 내역 URL로 재사용하지 않는다.
+- 갱신 호출은 async 함수와 setInterval을 사용하며 검토한 함수에는 진행 중 요청을 막는 별도 플래그가 없다.
+  ArcaGuard에서는 느린 조회가 다음 주기와 겹치지 않게 요청 중 여부·채널별 큐·시간 제한·백오프를 검증해야 한다.
+  이 관측은 해당 참고 함수 범위이며 전체 프로그램의 네트워크 오류 감사 결과가 아니다.
+- [useLoadChecker.jsx](https://github.com/lekakid/ArcaRefresher/blob/1b22bbf1939f03629f514362a75697ffa25336c4/src/core/LoadChecker/useLoadChecker.jsx),
+  blob `401dd5be28163ddd8e6fd5830db3dfc3c0330812`:
+  document 전체의 childList/subtree를 관측해 선택자가 나타나면 loaded로 기록하고 대기 집합이 비면 관측을 끊는다.
+  loaded는 현재 필드의 유효성/지속 존재/권한 보장이 아니다. ArcaGuard는 필요한 영역·수명·호출량을 제한하고
+  노드 교체/페이지 맥락 변경/필드 누락 시 읽기 상태를 재평가해야 한다.
+- UI 목록 교체와 탭 숨김 시 전체 중지를 그대로 가져오지 않는다. 읽기 큐와 사용자 화면을 분리하고
+  비활성 탭 실행 한계/재개 시 검증을 적용한다. 실제 입력 지연/DOM 부하/감시는 미검증이다.
+
+## REF-10 — 설정 저장·가져오기·다중 탭 메시지
+
+- [storage.jsx](https://github.com/lekakid/ArcaRefresher/blob/1b22bbf1939f03629f514362a75697ffa25336c4/src/store/storage.jsx),
+  blob `5768dfb304bc5776c02f0d43162454a92965ba43`:
+  GM 저장 경계, 버전 updater/백업, 300ms 지연 저장과 페이지 숨김 시 flush, BroadcastChannel 액션 전달을 확인했다.
+  버전 관리/중복 저장 완화는 참고하되 기본값과의 얕은 병합을 설정 스키마 검증으로 취급하지 않는다.
+- 검토한 importValues는 JSON.parse 후 입력 키마다 GM_setValue를 호출한다. ArcaGuard는 허용 키·자료형·버전·
+  채널 범위를 전체 검증한 뒤 적용하고 감시/자동 이동/신고 제출/작성자 통지를 OFF로 복원해야 한다.
+  다른 채널의 권한·검증 상태나 실행 중 작업을 가져오기 값으로 덮어쓰지 않는다.
+- 참고 동기화 수신부는 받은 액션을 store에 전달한다. ArcaGuard의 탭 간 메시지는 검증되지 않은 입력으로 취급하고
+  설정 변경 신호/스키마·버전 검증 후 재읽기로 제한한다. 메시지 자체가 관리 쓰기의 실행 지시가 되어서는 안 된다.
+  동기화/로컬 창 ID는 다른 관리자·PC를 막는 잠금이 아니다.
+- [DataManagement.jsx](https://github.com/lekakid/ArcaRefresher/blob/1b22bbf1939f03629f514362a75697ffa25336c4/src/core/DataManagement/ConfigMenu/DataManagement.jsx),
+  blob `9cca36157201eebed498ac2f640be63b28ed22da`:
+  가져오기/초기화 후 페이지 새로고침과 저장 키 정리/전체 내보내기를 사용한다.
+  ArcaGuard는 설정 적용을 위해 현재 작성 화면을 자동 새로고침하지 않고 허용 설정만 내보낸다.
+  기록 정리로 기처리 보호가 사라지거나 예전 작업이 재실행되지 않게 한다. 해당 UI나 라이브러리는 재사용하지 않았다.
+- 로컬 긴급 중지/정책 OFF는 일반 외형 설정의 지연 저장과 독립해 해당 인스턴스의 대기 작업을 즉시 막아야 한다.
+  다른 탭·PC까지 즉시 중지/정확히 한 번 실행을 보장한다고 설명하지 않는다.
+
+## REF-11 — 페이지 경로·사용자 표시와 관리 권한의 구별
+
+- [ContentCollector/slice.jsx](https://github.com/lekakid/ArcaRefresher/blob/1b22bbf1939f03629f514362a75697ffa25336c4/src/core/ContentCollector/slice.jsx),
+  blob `4e49220a4f1630fbf79c443502bf892eed29bc24`:
+  b/r/e/reports 경로를 구별하고 reports에서는 별도 위치의 채널 토큰을 읽는다.
+  참고 경로 구분이 신고 상세 필드 파서나 현재 채널의 관리자 권한 검사인 것은 아니다.
+- [ContentCollector.jsx](https://github.com/lekakid/ArcaRefresher/blob/1b22bbf1939f03629f514362a75697ffa25336c4/src/core/ContentCollector/ContentCollector.jsx),
+  blob `e03812753dcff11683d3f24649dd08ae08b4486e`를 재대조했다.
+  nav의 사용자 링크/게시판 제목/글머리·글 정보를 읽지만 그 존재를 채널별 신고 읽기/이동/제출 권한으로 바꾸지 않는다.
+  이전에 기록한 누락 기본값/이름→ID 덮어쓰기 한계도 유지한다.
+- [ChannelManager.jsx](https://github.com/lekakid/ArcaRefresher/blob/1b22bbf1939f03629f514362a75697ffa25336c4/src/feature/Site/ChannelManager/ChannelManager.jsx),
+  blob `542c1e454b18b98013648d179882a4f61f1a4eec`:
+  구독 채널 내비게이션을 읽고 그룹/메모 메뉴로 재구성한다. 파일명 때문에 관리자 채널 목록/권한 검사로 오해하지 않는다.
+- ArcaGuard의 현재 페이지 맥락은 채널 설정/실제 대상 링크/신고 코드와 교차 확인해야 한다.
+  신고 목록·상세·게시글·편집 화면의 준비 상태를 분리하고 구독·로그인 표시만으로 자동 실행 채널을 등록하지 않는다.
+
+## REF-12 — 분류 색·취소선·방문 표시는 서버 조치가 아님
+
+- [CategoryStyler.jsx](https://github.com/lekakid/ArcaRefresher/blob/1b22bbf1939f03629f514362a75697ffa25336c4/src/feature/Board/CategoryStyler/CategoryStyler.jsx),
+  blob `3e81a2542c6feb19e22e8bbd45807571604a9d6b`;
+  [CategoryRow.jsx](https://github.com/lekakid/ArcaRefresher/blob/1b22bbf1939f03629f514362a75697ffa25336c4/src/feature/Board/CategoryStyler/ConfigMenu/CategoryRow.jsx),
+  blob `d4bb3073fc4ee10735dbb1f431da77f56302ec6f`:
+  채널별 글머리 색/굵기/취소선/방문 표시와 CSS를 설정할 수 있다.
+- 참고 프로그램 또는 다른 사용자 스타일과 함께 쓸 수 있으므로 색/취소선/새로 붙은 CSS 클래스만으로
+  광고·처리 완료·삭제·이동 대상·권한을 판단하지 않는다. 검증된 의미 필드/ID와 서버 상태 재조회가 필요하다.
+- 현재 제공된 붉은 신고 처리 버튼과 일반/TEST 선택지를 이 스타일 코드의 제어 대상으로 확정하지 않는다.
+  신고 분류/버튼과 게시글 글머리는 독립 설정이며 현재 DOM은 계속 미검증이다.
