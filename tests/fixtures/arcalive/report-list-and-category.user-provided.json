@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "provenance": "user-provided-screenshots-anonymized",
+  "observedOn": "2026-10-24",
+  "exampleValuesSynthetic": true,
+  "liveDomVerified": false,
+  "selectors": null,
+  "reportList": {
+    "fieldLabels": ["신고날짜", "신고 대상", "작성자", "신고자", "처리 상태", "처리자", "조회하기"],
+    "visibleFilterLabel": "전체",
+    "historyControlLabel": "이전 내역 조회",
+    "stateFilterLabels": ["대기 목록", "완료 목록"],
+    "notificationControlDisplay": "알림 설정중",
+    "visibleRowCount": 4,
+    "visibleStateStrings": ["대기", "대기", "완", "완"],
+    "oneRowHasEqualAuthorAndReporterDisplay": true,
+    "navigationTargets": null,
+    "historyRangeVerified": false,
+    "visibleRowsArePerArticleReportCount": false
+  },
+  "articleCategoryControl": {
+    "selectedDisplay": "일반",
+    "visibleOptionLabels": ["일반", "TEST"],
+    "optionValues": null,
+    "fieldName": null,
+    "saveOperationVerified": false,
+    "nonModeratorAccessVerified": false
+  },
+  "unverified": ["live-dom", "list-navigation-and-history-range", "list-to-detail-status-value-mapping", "category-identifiers", "permissions", "background-read-and-write-side-effects"],
+  "notes": [
+    "No real account names, article/report IDs, original screenshots or live URLs are copied here.",
+    "Observed labels and display relationships are preserved; this is not a captured HTML fixture.",
+    "A visible category option does not prove its ID, permissions, access restrictions or save effects.",
+    "Equal author/reporter display values do not invalidate a report or add advertising evidence."
+  ]
+}
