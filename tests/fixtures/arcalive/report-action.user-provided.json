@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "provenance": "user-provided-screenshots-and-explanation-anonymized",
+  "observedOn": "2026-10-24",
+  "exampleValuesSynthetic": true,
+  "liveDomVerified": false,
+  "selectors": null,
+  "completedReportExample": {
+    "reportId": "REPORT_EXAMPLE_03",
+    "channelId": "example_channel",
+    "reportedTypeDisplay": "ARTICLE",
+    "targetUrl": "https://arca.live/b/example_channel/10000003",
+    "siteReportCount": 1,
+    "processingStatusDisplay": "완료",
+    "processorDisplayName": "테스트관리자A",
+    "resultReplyDisplay": "검토 결과 예시",
+    "articleMovementVerified": false
+  },
+  "pendingReportExample": {
+    "reportId": "REPORT_EXAMPLE_04",
+    "siteReportCount": 1,
+    "processingStatusDisplay": "대기",
+    "selectedActionLabelExample": "검토분류예시",
+    "selectedActionId": null,
+    "expectedEffects": {
+      "deleteRowVisible": true,
+      "banRowVisible": true,
+      "deleteValueDisplay": "",
+      "banValueDisplay": "",
+      "blankValuesConfirmedByUser": true,
+      "noDeletionOrBanEffectsVerified": false
+    },
+    "notifyAuthorControl": {
+      "label": "작성자 결과 통지",
+      "checkboxVisible": true,
+      "checkedInScreenshot": false,
+      "deliveryEffectsVerified": false
+    },
+    "submitButtonLabel": "전송"
+  },
+  "userConfirmedBehavior": {
+    "actionLabelsCustomizable": true,
+    "reportCategoriesCustomizableByModerator": true,
+    "selectThenSubmitMarksReportCompleted": true,
+    "articleCategoryMoveStillRequiredSeparately": true,
+    "replySource": "configured-category-or-action-preset"
+  },
+  "unverified": [
+    "live-dom-and-action-identifiers",
+    "category-to-action-control-relationship",
+    "preset-reply-read-location-and-configuration-ui",
+    "per-action-server-effects-and-permissions",
+    "background-submission-and-result-read",
+    "notification-read-side-effects",
+    "article-state-and-category-after-report-completion"
+  ],
+  "notes": [
+    "All report IDs, target links, names, reply and action example strings are synthetic; do not open the URLs.",
+    "These are separate screenshot contexts, not verified before/after captures of one submission.",
+    "The original screenshots and real account data are not copied to the repository.",
+    "Blank preview cells do not prove that an arbitrary configured action has no deletion or ban effects.",
+    "Report completion and article movement require separate verification; no live submission occurred."
+  ]
+}

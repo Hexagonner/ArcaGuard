@@ -46,6 +46,10 @@
   Re-reading a report must replace its snapshot, never increment counts; retain work/action deduplication.
 - Respect other moderators' work: skip verified handled/moved targets, re-read before action,
   and never claim local storage guarantees cross-account or cross-device exactly-once writes.
+- Keep report resolution/category/reply separate from article destination categories and move state.
+  Future configurable report submission is optional/OFF and requires verified absence of deletion/ban
+  effects, independent permission/background-path checks and re-reading the report result (OP-11).
+  Report completion alone never proves an article moved. Never overwrite another moderator's reply.
 
 ## Architecture and quality
 

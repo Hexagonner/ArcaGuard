@@ -13,6 +13,10 @@
 - Category-change testing additionally requires approval for one named test article.
 - If trash-category semantics imply deletion, do not enable automated movement.
 - No automatic deletion, comment deletion or account-ban code.
+- Report-processing categories/buttons and article destination categories are separate site concepts.
+  Report completion is not article movement. Any future optional report submission needs its own
+  verified permissions, safe effects, background write interface and result read; never hardcode labels
+  or infer that blank deletion/ban preview cells prove no side effects. See OP-11.
 - Until administrative UI is verified, future integrations use fixtures and mocks.
 - Automatic moves require a verified background request path and independent result reads.
   Never navigate/reload the active page, open a tab/window or drive visible moderator controls
