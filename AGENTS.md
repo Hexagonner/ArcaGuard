@@ -7,7 +7,12 @@
   Phase 0 and the explicit UI additions below are complete. Read `docs/PHASE_STATUS.md` before working.
 - Explicit UI additions approved: launcher positioning, persistence/reset, position locking,
   visibility toggle, and a dedicated administrator appearance screen with recovery entries.
-  Phase 2 onward, Phase 5 general settings, and all live administrative writes remain unapproved.
+  Phase 2 onward and Phase 5 general settings remain unapproved.
+  Narrow exception (2026-10-25): the user authorized one live proof using their newly created
+  article titled `테스트` in `prlvate`, after they report it, to verify notification-driven
+  background movement to `TEST`. Bind the exact article URL before acting; title alone is insufficient.
+  This is not general moderation or report-resolution submission approval. All verified-UI,
+  permission, state, background-path and site-safety access requirements still apply.
 - Stop after the approved phase; obtain user approval before the next phase.
 - Runtime: Tampermonkey; JavaScript ES Modules; Vite + vite-plugin-monkey;
   Vitest; ESLint; Korean user-facing UI. No required paid service or server.

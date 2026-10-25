@@ -1,7 +1,11 @@
 # ArcaLive adapter rules
 
-- Phase 1 read-only investigation is approved. No live administration writes or later-phase
-  implementation is approved. Reference-code selectors remain unverified until live evidence exists.
+- Phase 1 read-only investigation is approved. General live administration writes or later-phase
+  implementation remain unapproved. The 2026-10-25 user request additionally authorizes one
+  notification-driven background move of their newly created `테스트` article in `prlvate` to `TEST`.
+  Require its exact URL and all existing verified-UI, permission/state/background-path/access gates.
+  No report-resolution submission is authorized by this narrow test. Reference-code selectors
+  remain unverified until live evidence exists. Never retry or bypass a policy-blocked observation.
 - Use only observed site structures. Document each selector's source and verification
   date in `docs/SITE_VERIFICATION.md` before adding it.
 - Never infer report list structure, moderator authority or category-change endpoints.
