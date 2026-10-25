@@ -46,3 +46,16 @@ Tampermonkey 내부 화면과 arca.live 직접 접근은 도구 정책으로 차
 
 실제 확장 메뉴는 접근 제한으로 클릭 검증하지 않았다. API 등록/숨김 후 콜백 복구는
 Mock/생성 번들 실행 검사로 확인했다. 사이트 실행과 관리자 권한 검증은 미실행이다.
+
+## 핵심 흐름의 독립 합성 실험
+
+2026-10-25, 실제 Chrome, `http://127.0.0.1:5185/`.
+
+- 실행: `node scripts/serve-workflow-lab.js`, 실험 버튼 클릭. 고정 합성 SSE/HTTP 서버이며 아카라이브에 연결하지 않는다.
+- 알림 → 신고 조건 → 현재 글 → 이동 POST → 재조회 → 선택적 신고 완료 POST → 재조회를 시험했다.
+- 최종 기준 실행 8/8, 별도 대조 실행 8/8. 완료 OFF/ON·중복·이미 처리·거절·미변경·부분 실패·조건 미달을 포함한다.
+- `workflow-lab.chrome.visible.json`과 `workflow-lab.chrome.companion.json`에 서버 요청·변경 수와 화면 상태를 저장했다.
+  대조 초안/커서/포커스/스크롤은 처리 전후 동일했지만 처리 탭의 실제 이벤트 기록이 visible이므로
+  hidden 실행을 입증하지 않는다. 모든 IME/입력 지연·정지/다중 관리자/실제 Tampermonkey도 미검증이다.
+- `workflow-lab.chrome.png`는 최종 8개 완료 결과 화면이다. 구체적 범위/한계는 SITE_VERIFICATION PLATFORM-04를 따른다.
+- 실험 서버와 탭은 완료 후 종료했다. 배포 Userscript/운영 설정/실사이트 글·신고 상태는 변경하지 않았다.

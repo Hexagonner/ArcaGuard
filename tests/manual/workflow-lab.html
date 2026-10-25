@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>ArcaGuard 핵심 흐름 · 독립 합성 실험</title>
+    <style>
+      body { font: 16px/1.55 system-ui; margin: 24px auto; max-width: 940px; padding: 0 22px; color: #172b3a; background: #f5f7fa; }
+      h1 { font-size: 27px; margin-bottom: 6px; } p { margin: 8px 0; }
+      .card { background: white; padding: 16px 20px; margin: 14px 0; border: 1px solid #c8d3df; border-radius: 8px; }
+      textarea { display: block; width: 100%; height: 65px; margin-top: 8px; box-sizing: border-box; font: inherit; }
+      button { padding: 9px 18px; font: inherit; background: #174d7c; color: white; border: 0; border-radius: 5px; }
+      #status { min-height: 26px; font-weight: 700; } #summary { min-height: 242px; padding-left: 26px; margin: 0; }
+      #summary li { margin: 4px 0; } pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+      .boundary { color: #6b3b11; } .spacer { height: 700px; } details { margin-top: 14px; }
+    </style>
+  </head>
+  <body>
+    <h1>핵심 흐름 검증 · 로컬 합성 서버</h1>
+    <p>실제 알림 전송·HTTP 읽기/쓰기·서버 상태 재조회를 사용하는 독립 실험입니다.</p>
+    <p class="boundary">아카라이브에 연결하지 않습니다. 사이트 DOM·알림 방식·관리 권한·AI 성능 검증이 아닙니다.</p>
+    <div class="card">
+      <button id="run" type="button">핵심 흐름 8개 실험 실행</button>
+      <button id="delayed" type="button">5초 후 실행 · 다른 탭 사용 실험</button>
+      <a href="/?companion=2" target="_blank" rel="noopener">입력 대조 탭 열기</a>
+      <p id="status" role="status">실행 전</p>
+      <label for="draft">처리 중 보존할 합성 초안</label>
+      <textarea id="draft">검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.</textarea>
+    </div>
+    <div class="card"><ul id="summary"></ul><p id="totals">수신 → 조건 확인 → 이동 → 재조회 → 선택적 신고 완료</p></div>
+    <details><summary>원시 결과 JSON</summary><pre id="results">실행 후 표시됩니다.</pre></details>
+    <div class="spacer" aria-hidden="true"></div>
+    <script type="module" src="/lab.js"></script>
+  </body>
+</html>

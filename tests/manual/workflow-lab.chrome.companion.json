@@ -1,0 +1,801 @@
+{
+  "scope": "localhost-synthetic-workflow-only",
+  "observedAt": "2026-10-25T03:47:43.145Z",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "notificationTransport": "local SSE, not the Arca notification protocol",
+  "observationCount": 8,
+  "passed": 8,
+  "observations": [
+    {
+      "caseId": "move-only",
+      "name": "신고 완료 OFF",
+      "resolveReport": false,
+      "pass": true,
+      "expected": [
+        "moved",
+        "quarantine",
+        "pending",
+        1,
+        1,
+        0,
+        0
+      ],
+      "actual": [
+        "moved",
+        "quarantine",
+        "pending",
+        1,
+        1,
+        0,
+        0
+      ],
+      "outcome": {
+        "status": "moved"
+      },
+      "eventsReceived": 1,
+      "notificationCountCorrect": true,
+      "orderVerified": true,
+      "startedAt": "2026-10-25T03:47:39.843Z",
+      "finishedAt": "2026-10-25T03:47:40.224Z",
+      "visibilityAtStart": "visible",
+      "eventVisibility": [
+        "visible"
+      ],
+      "eventFocus": [
+        true
+      ],
+      "eventTimes": [
+        "2026-10-25T03:47:40.199Z"
+      ],
+      "visibilityAtFinish": "visible",
+      "pageStatePreserved": true,
+      "transientChanges": [],
+      "before": {
+        "url": "http://127.0.0.1:5185/",
+        "historyLength": 2,
+        "focusId": "",
+        "draft": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 65.5999984741211
+      },
+      "after": {
+        "url": "http://127.0.0.1:5185/",
+        "historyLength": 2,
+        "focusId": "",
+        "draft": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 65.5999984741211
+      },
+      "timeline": [
+        "notification-received",
+        "processing-start",
+        "processing-finished"
+      ],
+      "serverState": {
+        "id": "0e0e85fa-889d-495a-9a7f-654d6808c580",
+        "caseId": "move-only",
+        "category": "quarantine",
+        "reportStatus": "pending",
+        "reply": "",
+        "revision": 2,
+        "body": "합성 본문 · 서버에서 보존 여부를 대조합니다.",
+        "total": 3,
+        "moveRequests": 1,
+        "moveMutations": 1,
+        "resolveRequests": 0,
+        "resolveMutations": 0,
+        "notifications": 1,
+        "audit": [
+          "notification",
+          "report-read",
+          "article-read",
+          "move-request",
+          "move-applied",
+          "article-read"
+        ]
+      }
+    },
+    {
+      "caseId": "resolve",
+      "name": "신고 완료 ON",
+      "resolveReport": true,
+      "pass": true,
+      "expected": [
+        "completed",
+        "quarantine",
+        "completed",
+        1,
+        1,
+        1,
+        1
+      ],
+      "actual": [
+        "completed",
+        "quarantine",
+        "completed",
+        1,
+        1,
+        1,
+        1
+      ],
+      "outcome": {
+        "status": "completed"
+      },
+      "eventsReceived": 1,
+      "notificationCountCorrect": true,
+      "orderVerified": true,
+      "startedAt": "2026-10-25T03:47:40.230Z",
+      "finishedAt": "2026-10-25T03:47:40.638Z",
+      "visibilityAtStart": "visible",
+      "eventVisibility": [
+        "visible"
+      ],
+      "eventFocus": [
+        true
+      ],
+      "eventTimes": [
+        "2026-10-25T03:47:40.594Z"
+      ],
+      "visibilityAtFinish": "visible",
+      "pageStatePreserved": true,
+      "transientChanges": [],
+      "before": {
+        "url": "http://127.0.0.1:5185/",
+        "historyLength": 2,
+        "focusId": "",
+        "draft": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 65.5999984741211
+      },
+      "after": {
+        "url": "http://127.0.0.1:5185/",
+        "historyLength": 2,
+        "focusId": "",
+        "draft": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 65.5999984741211
+      },
+      "timeline": [
+        "notification-received",
+        "processing-start",
+        "processing-finished"
+      ],
+      "serverState": {
+        "id": "8d0e68d9-09c2-4ffe-bcb8-502f8fd47df2",
+        "caseId": "resolve",
+        "category": "quarantine",
+        "reportStatus": "completed",
+        "reply": "합성 처리 답변",
+        "revision": 2,
+        "body": "합성 본문 · 서버에서 보존 여부를 대조합니다.",
+        "total": 3,
+        "moveRequests": 1,
+        "moveMutations": 1,
+        "resolveRequests": 1,
+        "resolveMutations": 1,
+        "notifications": 1,
+        "audit": [
+          "notification",
+          "report-read",
+          "article-read",
+          "move-request",
+          "move-applied",
+          "article-read",
+          "report-read",
+          "resolve-request",
+          "resolve-applied",
+          "report-read"
+        ]
+      }
+    },
+    {
+      "caseId": "duplicates",
+      "name": "중복 알림 3회",
+      "resolveReport": true,
+      "pass": true,
+      "expected": [
+        "completed",
+        "quarantine",
+        "completed",
+        1,
+        1,
+        1,
+        1
+      ],
+      "actual": [
+        "completed",
+        "quarantine",
+        "completed",
+        1,
+        1,
+        1,
+        1
+      ],
+      "outcome": {
+        "status": "completed"
+      },
+      "eventsReceived": 3,
+      "notificationCountCorrect": true,
+      "orderVerified": true,
+      "startedAt": "2026-10-25T03:47:40.644Z",
+      "finishedAt": "2026-10-25T03:47:41.170Z",
+      "visibilityAtStart": "visible",
+      "eventVisibility": [
+        "visible",
+        "visible",
+        "visible"
+      ],
+      "eventFocus": [
+        true,
+        true,
+        true
+      ],
+      "eventTimes": [
+        "2026-10-25T03:47:41.004Z",
+        "2026-10-25T03:47:41.017Z",
+        "2026-10-25T03:47:41.052Z"
+      ],
+      "visibilityAtFinish": "visible",
+      "pageStatePreserved": true,
+      "transientChanges": [],
+      "before": {
+        "url": "http://127.0.0.1:5185/",
+        "historyLength": 2,
+        "focusId": "",
+        "draft": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 65.5999984741211
+      },
+      "after": {
+        "url": "http://127.0.0.1:5185/",
+        "historyLength": 2,
+        "focusId": "",
+        "draft": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 65.5999984741211
+      },
+      "timeline": [
+        "notification-received",
+        "processing-start",
+        "notification-received",
+        "notification-received",
+        "processing-finished"
+      ],
+      "serverState": {
+        "id": "6d6cd72d-371a-4a91-a1ca-77951ea28a14",
+        "caseId": "duplicates",
+        "category": "quarantine",
+        "reportStatus": "completed",
+        "reply": "합성 처리 답변",
+        "revision": 2,
+        "body": "합성 본문 · 서버에서 보존 여부를 대조합니다.",
+        "total": 3,
+        "moveRequests": 1,
+        "moveMutations": 1,
+        "resolveRequests": 1,
+        "resolveMutations": 1,
+        "notifications": 3,
+        "audit": [
+          "notification",
+          "report-read",
+          "article-read",
+          "move-request",
+          "notification",
+          "notification",
+          "move-applied",
+          "article-read",
+          "report-read",
+          "resolve-request",
+          "resolve-applied",
+          "report-read"
+        ]
+      }
+    },
+    {
+      "caseId": "already-moved",
+      "name": "이미 격리된 글",
+      "resolveReport": true,
+      "pass": true,
+      "expected": [
+        "skipped",
+        "quarantine",
+        "pending",
+        0,
+        0,
+        0,
+        0
+      ],
+      "actual": [
+        "skipped",
+        "quarantine",
+        "pending",
+        0,
+        0,
+        0,
+        0
+      ],
+      "outcome": {
+        "status": "skipped"
+      },
+      "eventsReceived": 1,
+      "notificationCountCorrect": true,
+      "orderVerified": true,
+      "startedAt": "2026-10-25T03:47:41.175Z",
+      "finishedAt": "2026-10-25T03:47:41.549Z",
+      "visibilityAtStart": "visible",
+      "eventVisibility": [
+        "visible"
+      ],
+      "eventFocus": [
+        true
+      ],
+      "eventTimes": [
+        "2026-10-25T03:47:41.534Z"
+      ],
+      "visibilityAtFinish": "visible",
+      "pageStatePreserved": true,
+      "transientChanges": [],
+      "before": {
+        "url": "http://127.0.0.1:5185/",
+        "historyLength": 2,
+        "focusId": "",
+        "draft": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 65.5999984741211
+      },
+      "after": {
+        "url": "http://127.0.0.1:5185/",
+        "historyLength": 2,
+        "focusId": "",
+        "draft": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 65.5999984741211
+      },
+      "timeline": [
+        "notification-received",
+        "processing-start",
+        "processing-finished"
+      ],
+      "serverState": {
+        "id": "026ba553-7f95-4141-b1f0-ad3873160afc",
+        "caseId": "already-moved",
+        "category": "quarantine",
+        "reportStatus": "pending",
+        "reply": "",
+        "revision": 1,
+        "body": "합성 본문 · 서버에서 보존 여부를 대조합니다.",
+        "total": 3,
+        "moveRequests": 0,
+        "moveMutations": 0,
+        "resolveRequests": 0,
+        "resolveMutations": 0,
+        "notifications": 1,
+        "audit": [
+          "notification",
+          "report-read",
+          "article-read"
+        ]
+      }
+    },
+    {
+      "caseId": "move-denied",
+      "name": "이동 권한 거절",
+      "resolveReport": true,
+      "pass": true,
+      "expected": [
+        "held",
+        "ordinary",
+        "pending",
+        1,
+        0,
+        0,
+        0
+      ],
+      "actual": [
+        "held",
+        "ordinary",
+        "pending",
+        1,
+        0,
+        0,
+        0
+      ],
+      "outcome": {
+        "status": "held",
+        "reason": "HTTP 403"
+      },
+      "eventsReceived": 1,
+      "notificationCountCorrect": true,
+      "orderVerified": true,
+      "startedAt": "2026-10-25T03:47:41.555Z",
+      "finishedAt": "2026-10-25T03:47:41.941Z",
+      "visibilityAtStart": "visible",
+      "eventVisibility": [
+        "visible"
+      ],
+      "eventFocus": [
+        true
+      ],
+      "eventTimes": [
+        "2026-10-25T03:47:41.922Z"
+      ],
+      "visibilityAtFinish": "visible",
+      "pageStatePreserved": true,
+      "transientChanges": [],
+      "before": {
+        "url": "http://127.0.0.1:5185/",
+        "historyLength": 2,
+        "focusId": "",
+        "draft": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 65.5999984741211
+      },
+      "after": {
+        "url": "http://127.0.0.1:5185/",
+        "historyLength": 2,
+        "focusId": "",
+        "draft": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 65.5999984741211
+      },
+      "timeline": [
+        "notification-received",
+        "processing-start",
+        "processing-finished"
+      ],
+      "serverState": {
+        "id": "bb201a4a-dd9f-4792-91d2-90d4f52abc9e",
+        "caseId": "move-denied",
+        "category": "ordinary",
+        "reportStatus": "pending",
+        "reply": "",
+        "revision": 1,
+        "body": "합성 본문 · 서버에서 보존 여부를 대조합니다.",
+        "total": 3,
+        "moveRequests": 1,
+        "moveMutations": 0,
+        "resolveRequests": 0,
+        "resolveMutations": 0,
+        "notifications": 1,
+        "audit": [
+          "notification",
+          "report-read",
+          "article-read",
+          "move-request"
+        ]
+      }
+    },
+    {
+      "caseId": "unchanged",
+      "name": "200 응답 뒤 글머리 미변경",
+      "resolveReport": true,
+      "pass": true,
+      "expected": [
+        "held",
+        "ordinary",
+        "pending",
+        1,
+        0,
+        0,
+        0
+      ],
+      "actual": [
+        "held",
+        "ordinary",
+        "pending",
+        1,
+        0,
+        0,
+        0
+      ],
+      "outcome": {
+        "status": "held",
+        "reason": "Move result not verified"
+      },
+      "eventsReceived": 1,
+      "notificationCountCorrect": true,
+      "orderVerified": true,
+      "startedAt": "2026-10-25T03:47:41.946Z",
+      "finishedAt": "2026-10-25T03:47:42.334Z",
+      "visibilityAtStart": "visible",
+      "eventVisibility": [
+        "visible"
+      ],
+      "eventFocus": [
+        true
+      ],
+      "eventTimes": [
+        "2026-10-25T03:47:42.310Z"
+      ],
+      "visibilityAtFinish": "visible",
+      "pageStatePreserved": true,
+      "transientChanges": [],
+      "before": {
+        "url": "http://127.0.0.1:5185/",
+        "historyLength": 2,
+        "focusId": "",
+        "draft": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 65.5999984741211
+      },
+      "after": {
+        "url": "http://127.0.0.1:5185/",
+        "historyLength": 2,
+        "focusId": "",
+        "draft": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 65.5999984741211
+      },
+      "timeline": [
+        "notification-received",
+        "processing-start",
+        "processing-finished"
+      ],
+      "serverState": {
+        "id": "97ba28eb-c32e-4466-ab3c-8d9f0066caf2",
+        "caseId": "unchanged",
+        "category": "ordinary",
+        "reportStatus": "pending",
+        "reply": "",
+        "revision": 1,
+        "body": "합성 본문 · 서버에서 보존 여부를 대조합니다.",
+        "total": 3,
+        "moveRequests": 1,
+        "moveMutations": 0,
+        "resolveRequests": 0,
+        "resolveMutations": 0,
+        "notifications": 1,
+        "audit": [
+          "notification",
+          "report-read",
+          "article-read",
+          "move-request",
+          "article-read"
+        ]
+      }
+    },
+    {
+      "caseId": "resolve-failed",
+      "name": "이동 성공 · 신고 전송 실패",
+      "resolveReport": true,
+      "pass": true,
+      "expected": [
+        "partial",
+        "quarantine",
+        "pending",
+        1,
+        1,
+        1,
+        0
+      ],
+      "actual": [
+        "partial",
+        "quarantine",
+        "pending",
+        1,
+        1,
+        1,
+        0
+      ],
+      "outcome": {
+        "status": "partial",
+        "reason": "HTTP 503"
+      },
+      "eventsReceived": 1,
+      "notificationCountCorrect": true,
+      "orderVerified": true,
+      "startedAt": "2026-10-25T03:47:42.338Z",
+      "finishedAt": "2026-10-25T03:47:42.736Z",
+      "visibilityAtStart": "visible",
+      "eventVisibility": [
+        "visible"
+      ],
+      "eventFocus": [
+        true
+      ],
+      "eventTimes": [
+        "2026-10-25T03:47:42.698Z"
+      ],
+      "visibilityAtFinish": "visible",
+      "pageStatePreserved": true,
+      "transientChanges": [],
+      "before": {
+        "url": "http://127.0.0.1:5185/",
+        "historyLength": 2,
+        "focusId": "",
+        "draft": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 65.5999984741211
+      },
+      "after": {
+        "url": "http://127.0.0.1:5185/",
+        "historyLength": 2,
+        "focusId": "",
+        "draft": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 65.5999984741211
+      },
+      "timeline": [
+        "notification-received",
+        "processing-start",
+        "processing-finished"
+      ],
+      "serverState": {
+        "id": "58fdb1b8-0933-4063-b653-b23c7df5c7d4",
+        "caseId": "resolve-failed",
+        "category": "quarantine",
+        "reportStatus": "pending",
+        "reply": "",
+        "revision": 2,
+        "body": "합성 본문 · 서버에서 보존 여부를 대조합니다.",
+        "total": 3,
+        "moveRequests": 1,
+        "moveMutations": 1,
+        "resolveRequests": 1,
+        "resolveMutations": 0,
+        "notifications": 1,
+        "audit": [
+          "notification",
+          "report-read",
+          "article-read",
+          "move-request",
+          "move-applied",
+          "article-read",
+          "report-read",
+          "resolve-request"
+        ]
+      }
+    },
+    {
+      "caseId": "below-threshold",
+      "name": "신고 수 미달",
+      "resolveReport": true,
+      "pass": true,
+      "expected": [
+        "skipped",
+        "ordinary",
+        "pending",
+        0,
+        0,
+        0,
+        0
+      ],
+      "actual": [
+        "skipped",
+        "ordinary",
+        "pending",
+        0,
+        0,
+        0,
+        0
+      ],
+      "outcome": {
+        "status": "skipped"
+      },
+      "eventsReceived": 1,
+      "notificationCountCorrect": true,
+      "orderVerified": true,
+      "startedAt": "2026-10-25T03:47:42.741Z",
+      "finishedAt": "2026-10-25T03:47:43.145Z",
+      "visibilityAtStart": "visible",
+      "eventVisibility": [
+        "visible"
+      ],
+      "eventFocus": [
+        true
+      ],
+      "eventTimes": [
+        "2026-10-25T03:47:43.102Z"
+      ],
+      "visibilityAtFinish": "visible",
+      "pageStatePreserved": true,
+      "transientChanges": [],
+      "before": {
+        "url": "http://127.0.0.1:5185/",
+        "historyLength": 2,
+        "focusId": "",
+        "draft": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 65.5999984741211
+      },
+      "after": {
+        "url": "http://127.0.0.1:5185/",
+        "historyLength": 2,
+        "focusId": "",
+        "draft": "검증용 초안입니다. 실제 사용자 작성 내용이 아닙니다.",
+        "selectionStart": 2,
+        "selectionEnd": 6,
+        "scrollX": 0,
+        "scrollY": 65.5999984741211
+      },
+      "timeline": [
+        "notification-received",
+        "processing-start",
+        "processing-finished"
+      ],
+      "serverState": {
+        "id": "55c946c6-11a6-4259-a7fb-8dea70177cbb",
+        "caseId": "below-threshold",
+        "category": "ordinary",
+        "reportStatus": "pending",
+        "reply": "",
+        "revision": 1,
+        "body": "합성 본문 · 서버에서 보존 여부를 대조합니다.",
+        "total": 1,
+        "moveRequests": 0,
+        "moveMutations": 0,
+        "resolveRequests": 0,
+        "resolveMutations": 0,
+        "notifications": 1,
+        "audit": [
+          "notification",
+          "report-read"
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "실제 아카라이브 DOM/알림/권한/저장·전송 미검증",
+    "합성 신고 기준 정책이며 광고 분류/AI 검증 아님",
+    "Chrome 일반 페이지 실험이며 실제 Tampermonkey sandbox 실행 검증 아님",
+    "단일 탭의 제한된 사례이며 탭 정지/종료/IME 입력/다중 관리자 보장 아님",
+    "합성 서버의 revision 조건 지원을 실제 사이트 지원으로 가정할 수 없음"
+  ],
+  "companionTrial": {
+    "scope": "localhost-companion-observation-only",
+    "before": {
+      "at": "2026-10-25T03:47:36.343Z",
+      "focusId": "draft",
+      "scrollX": 0,
+      "scrollY": 194.3999938964844,
+      "selectionEnd": 21,
+      "selectionStart": 21,
+      "url": "http://127.0.0.1:5185/?companion=2",
+      "value": "다른 탭에서 작성하는 합성 초안입니다."
+    },
+    "after": {
+      "at": "2026-10-25T03:47:54.868Z",
+      "focusId": "draft",
+      "scrollX": 0,
+      "scrollY": 194.3999938964844,
+      "selectionEnd": 21,
+      "selectionStart": 21,
+      "url": "http://127.0.0.1:5185/?companion=2",
+      "value": "다른 탭에서 작성하는 합성 초안입니다."
+    },
+    "unchanged": true,
+    "processingWithinObservation": true,
+    "hiddenConditionMet": false,
+    "note": "Actual event records remained visible; this is not proof of hidden-tab execution."
+  }
+}
